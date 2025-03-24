@@ -10,7 +10,6 @@ Pagina web de un hotel con su respectiva base de datos basica
 - [ ] Organizar base de datos
     - [ ] agregar numero de personas que se van a hospedar 
     - [ ] organizar estructura 
-    - [ ] GFM task list 3-3
 - [ ] Conectar Baase de Datos a la pagina de reservas
 
 
