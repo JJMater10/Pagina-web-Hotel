@@ -4,13 +4,26 @@
     box-sizing: border-box;
 }
 
-body {
-    background-image: url('fondo.jpg');
-}
+
+    body {
+        background-image: url('../assets/img/fachada\ hotel.jpg') no-repeat center center fixed;
+        background-size: cover;
+        background-position: center; /* Centra la imagen */
+        background-repeat: no-repeat; /* Evita que la imagen se repita */
+        height: 100vh; /* Ocupa el 100% de la altura de la pantalla */
+        font-family: 'Montserrat', sans-serif;
+    }
+
+    #reserva {
+        background-color: #f4f4f4; /* Cambia este color */
+        padding: 50px 0; /* Añade espacio arriba y abajo */
+        background: none !important;
+    }
 
 .form-register {
-    width: 400px;
-    background: #24303c;
+    width: 100%;
+    max-width: 500px;
+    background: #000102;
     padding: 30px;
     margin: auto;
     margin-top: 0px;
@@ -20,14 +33,48 @@ body {
     box-shadow: 7px 13px 37px #000;
 }
 
+/* 🟢 Hacerlo más adaptable en pantallas pequeñas */
+@media screen and (max-width: 768px) {
+    .form-register {
+        width: 95%; /* Usa más espacio en pantallas pequeñas */
+        padding: 20px;
+    }
+
+    .controls {
+        font-size: 16px; /* Reduce el tamaño del texto en móviles */
+    }
+
+    .form-register h4 {
+        font-size: 20px;
+    }
+}
+
+/* 🟢 Ajustes especiales para celulares muy pequeños */
+@media screen and (max-width: 480px) {
+    .form-register {
+        width: 100%; /* Aprovecha todo el ancho en pantallas muy pequeñas */
+        padding: 15px;
+    }
+
+    .controls {
+        font-size: 14px;
+        padding: 8px;
+    }
+
+    .form-register h4 {
+        font-size: 18px;
+    }
+}
+
 .form-register h4 {
     font-size: 22px;
     margin-bottom: 20px;
+    text-align: center;
 }
 
 .controls {
     width: 100%;
-    background: #24303c;
+    background: #000102;
     padding: 10px;
     border-radius: 4px;
     margin-bottom: 16px;
@@ -62,15 +109,20 @@ body {
     color: white;
     margin: 16px 0;
     font-size: 16px;
+    
 }
 
 #reserva .container {
-    background-color: rgba(255, 255, 255, 0.1); /* Blanco transparente */
-    padding: 20px;
+    background-color: #e0e0e0; /* Fondo específico solo para el contenedor */
+    padding: 30px;
     border-radius: 10px;
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2); /* Sombra para resaltar */
+    background: none !important;
+    box-shadow: none; /* También elimina la sombra si es necesario */
 }
 
 .text-muted-r {
     --bs-text-opacity: 1;
     color: #f9fafc !important;
 }
+
