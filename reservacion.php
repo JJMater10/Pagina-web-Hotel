@@ -1,3 +1,17 @@
+
+<?php
+require_once 'Conexión BD\conexion.php'; // Incluir el archivo de conexión
+
+// Obtener habitaciones desde la base de datos
+$sql_habitaciones = "SELECT idhabitacion, nom_hab FROM habitacion";
+$result_habitaciones = $conn->query($sql_habitaciones);
+
+// Obtener medios de pago desde la base de datos
+$sql_medios_pago = "SELECT idmedio_pag, tipo_pag FROM medio_pag";
+$result_medios_pago = $conn->query($sql_medios_pago);
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -43,22 +57,47 @@
         <!-- Reservación Aqui poner el formulario de reservacion -->
         <section id="reserva">
             <div class="container">
-                <section class="form-register">
-                    <h4>Formulario Registro</h4>
-                    <input class="controls" type="text" name="nombres" id="nombre-pri" placeholder="Ingrese su Primer Nombre">
-                    <input class="controls" type="text" name="nombres" id="nombre-seg" placeholder="Ingrese su Segundo Nombre">
-                    <input class="controls" type="text" name="apellidos" id="apellido-pri" placeholder="Ingrese su Primer Apellido">
-                    <input class="controls" type="text" name="apellidos" id="apellido-seg" placeholder="Ingrese su Segundo Apellido">
-                    <input class="controls" type="text" name="cedula" id="cedula" placeholder="Ingrese su cedula">
-                    <input class="controls" type="email" name="correo" id="correo" placeholder="Ingrese su Correo">
-                    <input class="controls" type="date" name="fecha-ini" id="fecha-ini" placeholder="Fecha de llegada">
-                    <input class="controls" type="date" name="fecha-sal" id="fecha-sal" placeholder="Fecha de salida">
-                    <input class="controls" type="text" name="Habitacion" id="habitacion" placeholder="Eliga la habitación a reservar">
-                    <!-- Agregar lista desplegable y organizar base de datos (agregar numero de personas) -->
-                    <input class="controls" type="text" name="personas" id="personas" placeholder="Numero de personas">
-                    <p>Estoy de acuerdo con <a href="#">Terminos y Condiciones</a></p>
-                    <input class="botons" type="submit" value="Registrar Reservación">
-                </section>
+            <form action="guardar_formulario.php" method="POST">
+        <input type="text" name="prim_nom_client" placeholder="Primer Nombre" required>
+        <input type="text" name="seg_nom_client" placeholder="Segundo Nombre">
+        <input type="text" name="prim_apelli_client" placeholder="Primer Apellido" required>
+        <input type="text" name="seg_apelli_client" placeholder="Segundo Apellido">
+        <input type="number" name="edad_client" placeholder="Edad" required>
+        <input type="text" name="iden_client" placeholder="Identificación" required>
+        <input type="text" name="tel_client" placeholder="Teléfono" required>
+        <input type="email" name="email_client" placeholder="Correo Electrónico" required>
+
+        <label>Fecha de Entrada:</label>
+        <input type="date" name="fecha_entrada" required>
+
+        <label>Fecha de Salida:</label>
+        <input type="date" name="fecha_salida" required>
+
+        <label>Cantidad de Personas:</label>
+        <input type="number" name="cant_person" required>
+
+        <label>Selecciona la Habitación:</label>
+        <select name="habitacion_id" required>
+            <option value="">Seleccione una habitación</option>
+            <?php while ($row = $result_habitaciones->fetch_assoc()): ?>
+                <option value="<?php echo $row['idhabitacion']; ?>">
+                    <?php echo $row['nom_hab']; ?>
+                </option>
+            <?php endwhile; ?>
+        </select>
+
+        <label>Selecciona Medio de Pago:</label>
+        <select name="medio_pago" required>
+            <option value="">Seleccione un método de pago</option>
+            <?php while ($row = $result_medios_pago->fetch_assoc()): ?>
+                <option value="<?php echo $row['idmedio_pag']; ?>">
+                    <?php echo $row['tipo_pag']; ?>
+                </option>
+            <?php endwhile; ?>
+        </select>
+
+        <button type="submit">Reservar</button>
+    </form>
             </div>
         </section>
         <!-- Contact-->
@@ -99,3 +138,7 @@
         <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
     </body>
 </html>
+
+<?php
+$conn->close();
+?>
