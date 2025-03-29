@@ -29,7 +29,7 @@ $result_medios_pago = $conn->query($sql_medios_pago);
         <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700" rel="stylesheet" type="text/css" />
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="css/styles.css" rel="stylesheet" />
-        <link href="css/formulario.css" rel="stylesheet" />
+        <link href="css/formulario.css"  type="text/css" rel="stylesheet" />
     </head>
     <body id="page-top">
         <!-- Navigation-->
@@ -57,27 +57,28 @@ $result_medios_pago = $conn->query($sql_medios_pago);
         <!-- Reservación Aqui poner el formulario de reservacion -->
         <section id="reserva">
             <div class="container">
-            <form action="guardar_formulario.php" method="POST">
-        <input type="text" name="prim_nom_client" placeholder="Primer Nombre" required>
-        <input type="text" name="seg_nom_client" placeholder="Segundo Nombre">
-        <input type="text" name="prim_apelli_client" placeholder="Primer Apellido" required>
-        <input type="text" name="seg_apelli_client" placeholder="Segundo Apellido">
-        <input type="number" name="edad_client" placeholder="Edad" required>
-        <input type="text" name="iden_client" placeholder="Identificación" required>
-        <input type="text" name="tel_client" placeholder="Teléfono" required>
-        <input type="email" name="email_client" placeholder="Correo Electrónico" required>
+            <form action="guardar_formulario.php"  method="POST" class="form-register" >
+            <h4>Formulario Registro</h4>
+        <input type="text" name="prim_nom_client" class="controls" placeholder="Primer Nombre" required>
+        <input type="text" name="seg_nom_client" class="controls" placeholder="Segundo Nombre">
+        <input type="text" name="prim_apelli_client" class="controls" placeholder="Primer Apellido" required>
+        <input type="text" name="seg_apelli_client" class="controls" placeholder="Segundo Apellido">
+        <input type="number" name="edad_client" class="controls" placeholder="Edad" required>
+        <input type="text" name="iden_client" class="controls" placeholder="Identificación" required>
+        <input type="text" name="tel_client" class="controls" placeholder="Teléfono" required>
+        <input type="email" name="email_client" class="controls" placeholder="Correo Electrónico" required>
 
         <label>Fecha de Entrada:</label>
-        <input type="date" name="fecha_entrada" required>
+        <input type="date" class="controls" name="fecha_entrada" required>
 
         <label>Fecha de Salida:</label>
-        <input type="date" name="fecha_salida" required>
+        <input type="date" class="controls" name="fecha_salida" required>
 
         <label>Cantidad de Personas:</label>
-        <input type="number" name="cant_person" required>
+        <input type="number" class="controls" name="cant_person" required>
 
         <label>Selecciona la Habitación:</label>
-        <select name="habitacion_id" required>
+        <select  name="habitacion_id" class="controls" required>
             <option value="">Seleccione una habitación</option>
             <?php while ($row = $result_habitaciones->fetch_assoc()): ?>
                 <option value="<?php echo $row['idhabitacion']; ?>">
@@ -87,7 +88,7 @@ $result_medios_pago = $conn->query($sql_medios_pago);
         </select>
 
         <label>Selecciona Medio de Pago:</label>
-        <select name="medio_pago" required>
+        <select name="medio_pago" class="controls" required>
             <option value="">Seleccione un método de pago</option>
             <?php while ($row = $result_medios_pago->fetch_assoc()): ?>
                 <option value="<?php echo $row['idmedio_pag']; ?>">
@@ -96,7 +97,7 @@ $result_medios_pago = $conn->query($sql_medios_pago);
             <?php endwhile; ?>
         </select>
 
-        <button type="submit">Reservar</button>
+        <button type="submit" class="botons">Reservar</button>
     </form>
             </div>
         </section>
@@ -135,7 +136,7 @@ $result_medios_pago = $conn->query($sql_medios_pago);
         <!-- * *                               SB Forms JS                               * *-->
         <!-- * * Activate your form at https://startbootstrap.com/solution/contact-forms * *-->
         <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
-        <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
+        <!-- <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script> -->
     </body>
 </html>
 
