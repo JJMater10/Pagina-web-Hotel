@@ -8,7 +8,7 @@
 - [x] Conectar Baase de Datos a la pagina de reservas
 
 
-###Lista a largo plazo
+## Lista a largo plazo
 - [ ] Crear pagina del empleado de reservas
 - [ ] Conectar la Base de Datos a la pagina de control de reservas
 
