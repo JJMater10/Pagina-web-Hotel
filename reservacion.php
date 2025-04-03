@@ -1,7 +1,23 @@
 
 <?php
-require_once 'Conexión BD\conexion.php'; // Incluir el archivo de conexión
+session_start(); // Iniciar la sesión para verificar alertas
+require_once 'Conexión BD/conexion.php'; // Incluir la conexión a la base de datos
 
+// Verificar si hay una reserva exitosa y mostrar la alerta
+if (isset($_SESSION['reserva_exitosa']) && $_SESSION['reserva_exitosa']) {
+    echo "<script>
+        document.addEventListener('DOMContentLoaded', function() {
+            Swal.fire({
+                title: '¡Reserva Exitosa!',
+                text: 'Su reservación ha sido registrada con éxito.',
+                icon: 'success'
+            });
+        });
+    </script>";
+
+    // Eliminar la variable de sesión para que no se repita la alerta al recargar
+    unset($_SESSION['reserva_exitosa']);
+}
 // Obtener habitaciones desde la base de datos
 $sql_habitaciones = "SELECT idhabitacion, nom_hab FROM habitacion";
 $result_habitaciones = $conn->query($sql_habitaciones);
@@ -24,11 +40,12 @@ $result_medios_pago = $conn->query($sql_medios_pago);
         <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
         <!-- Font Awesome icons (free version)-->
         <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <!-- Google fonts-->
         <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
         <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700" rel="stylesheet" type="text/css" />
         <!-- Core theme CSS (includes Bootstrap)-->
-        <link href="css/styles.css" rel="stylesheet" />
+        <link href="css/styles_formu.css" rel="stylesheet" />
         <link href="css/formulario.css"  type="text/css" rel="stylesheet" />
     </head>
     <body id="page-top">
@@ -43,6 +60,7 @@ $result_medios_pago = $conn->query($sql_medios_pago);
                     <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
                         <li class="nav-item"><a class="nav-link" href="index.html">Inicio</a></li>
                         <li class="nav-item"><a class="nav-link" href="#reserva">Reservación</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#contact">Contactanos</a></li>
                     </ul>
                 </div>
             </div>
@@ -54,53 +72,103 @@ $result_medios_pago = $conn->query($sql_medios_pago);
                 <a class="btn btn-primary btn-xl text-uppercase" href="#reserva">Continuemos</a>
             </div>
         </header>
-        <!-- Reservación Aqui poner el formulario de reservacion -->
+        <!-- Reservación = Aqui poner el formulario de reservacion -->
         <section id="reserva">
-            <div class="container">
-            <form action="guardar_formulario.php"  method="POST" class="form-register" >
+    <div class="container">
+        <form action="Acciones/guardar_formulario.php" method="POST" class="form-register">
             <h4>Formulario Registro</h4>
-        <input type="text" name="prim_nom_client" class="controls" placeholder="Primer Nombre" required>
-        <input type="text" name="seg_nom_client" class="controls" placeholder="Segundo Nombre">
-        <input type="text" name="prim_apelli_client" class="controls" placeholder="Primer Apellido" required>
-        <input type="text" name="seg_apelli_client" class="controls" placeholder="Segundo Apellido">
-        <input type="number" name="edad_client" class="controls" placeholder="Edad" required>
-        <input type="text" name="iden_client" class="controls" placeholder="Identificación" required>
-        <input type="text" name="tel_client" class="controls" placeholder="Teléfono" required>
-        <input type="email" name="email_client" class="controls" placeholder="Correo Electrónico" required>
 
-        <label>Fecha de Entrada:</label>
-        <input type="date" class="controls" name="fecha_entrada" required>
-
-        <label>Fecha de Salida:</label>
-        <input type="date" class="controls" name="fecha_salida" required>
-
-        <label>Cantidad de Personas:</label>
-        <input type="number" class="controls" name="cant_person" required>
-
-        <label>Selecciona la Habitación:</label>
-        <select  name="habitacion_id" class="controls" required>
-            <option value="">Seleccione una habitación</option>
-            <?php while ($row = $result_habitaciones->fetch_assoc()): ?>
-                <option value="<?php echo $row['idhabitacion']; ?>">
-                    <?php echo $row['nom_hab']; ?>
-                </option>
-            <?php endwhile; ?>
-        </select>
-
-        <label>Selecciona Medio de Pago:</label>
-        <select name="medio_pago" class="controls" required>
-            <option value="">Seleccione un método de pago</option>
-            <?php while ($row = $result_medios_pago->fetch_assoc()): ?>
-                <option value="<?php echo $row['idmedio_pag']; ?>">
-                    <?php echo $row['tipo_pag']; ?>
-                </option>
-            <?php endwhile; ?>
-        </select>
-
-        <button type="submit" class="botons">Reservar</button>
-    </form>
+            <!-- Fila para primer y segundo nombre -->
+            <div class="row">
+                <div class="col-md-6">
+                    <input type="text" name="prim_nom_client" class="controls" placeholder="Primer Nombre" required>
+                </div>
+                <div class="col-md-6">
+                    <input type="text" name="seg_nom_client" class="controls" placeholder="Segundo Nombre">
+                </div>
             </div>
-        </section>
+
+            <!-- Fila para primer y segundo apellido -->
+            <div class="row">
+                <div class="col-md-6">
+                    <input type="text" name="prim_apelli_client" class="controls" placeholder="Primer Apellido" required>
+                </div>
+                <div class="col-md-6">
+                    <input type="text" name="seg_apelli_client" class="controls" placeholder="Segundo Apellido">
+                </div>
+            </div>
+
+            <!-- Fila para edad y identificación -->
+            <div class="row">
+                <div class="col-md-6">
+                    <input type="number" name="edad_client" class="controls" placeholder="Edad" required>
+                </div>
+                <div class="col-md-6">
+                    <input type="text" name="iden_client" class="controls" placeholder="Identificación" required>
+                </div>
+            </div>
+
+            <!-- Fila para teléfono y correo -->
+            <div class="row">
+                <div class="col-md-6">
+                    <input type="text" name="tel_client" class="controls" placeholder="Teléfono" pattern="[0-9]{10}" required>
+                </div>
+                <div class="col-md-6">
+                    <input type="email" name="email_client" class="controls" placeholder="Correo Electrónico" required>
+                </div>
+            </div>
+
+            <!-- Fila para fechas -->
+            <div class="row">
+                <div class="col-md-6">
+                    <label>Fecha de Entrada:</label>
+                    <input type="date" class="controls" name="fecha_entrada" required>
+                </div>
+                <div class="col-md-6">
+                    <label>Fecha de Salida:</label>
+                    <input type="date" class="controls" name="fecha_salida" required>
+                </div>
+            </div>
+
+            <!-- Fila para cantidad de personas -->
+            <div class="row">
+                <div class="col-md-6">
+                    <label>Cantidad de Personas:</label>
+                    <input type="number" class="controls" name="cant_person" pattern="[0-9]{10}" required>
+                </div>
+            </div>
+
+            <!-- Fila para seleccionar habitación y medio de pago -->
+            <div class="row">
+                <div class="col-md-6">
+                    <label>Selecciona la Habitación:</label>
+                    <select name="habitacion_id" class="controls" required>
+                        <option value="">Seleccione una habitación</option>
+                        <?php while ($row = $result_habitaciones->fetch_assoc()): ?>
+                            <option value="<?php echo $row['idhabitacion']; ?>">
+                                <?php echo $row['nom_hab']; ?>
+                            </option>
+                        <?php endwhile; ?>
+                    </select>
+                </div>
+                <div class="col-md-6">
+                    <label>Selecciona Medio de Pago:</label>
+                    <select name="medio_pago" class="controls" required>
+                        <option value="">Seleccione un método de pago</option>
+                        <?php while ($row = $result_medios_pago->fetch_assoc()): ?>
+                            <option value="<?php echo $row['idmedio_pag']; ?>">
+                                <?php echo $row['tipo_pag']; ?>
+                            </option>
+                        <?php endwhile; ?>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Botón de reserva -->
+            <button type="submit" class="botons">Reservar</button>
+        </form>
+    </div>
+</section>
         <!-- Contact-->
         <section class="page-section" id="contact">
             <div class="container">
@@ -114,15 +182,15 @@ $result_medios_pago = $conn->query($sql_medios_pago);
         <footer class="footer py-4">
             <div class="container">
                 <div class="row align-items-center">
-                    <div class="col-lg-4 text-lg-start">Copyright &copy; Your Website 2025</div>
+                    <div class="col-lg-4 text-lg-start text-muted-r">Copyright &copy; Your Website 2025</div>
                     <div class="col-lg-4 my-3 my-lg-0">
                         <a class="btn btn-dark btn-social mx-2" href="#!" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
                         <a class="btn btn-dark btn-social mx-2" href="#!" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
                         <a class="btn btn-dark btn-social mx-2" href="#!" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
                     </div>
                     <div class="col-lg-4 text-lg-end">
-                        <a class="link-dark text-decoration-none me-3" href="#!">Privacy Policy</a>
-                        <a class="link-dark text-decoration-none" href="#!">Terms of Use</a>
+                        <a class="link-dark text-decoration-none me-3 text-muted-r" href="#!">Privacy Policy</a>
+                        <a class="link-dark text-decoration-none text-muted-r" href="#!">Terms of Use</a>
                     </div>
                 </div>
             </div>
@@ -131,7 +199,8 @@ $result_medios_pago = $conn->query($sql_medios_pago);
         <!-- Bootstrap core JS-->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
         <!-- Core theme JS-->
-        <script src="js/scripts.js"></script>
+        <script src="js/scripts_form.js"></script>
+        <script src="js/validacion.js"></script>
         <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
         <!-- * *                               SB Forms JS                               * *-->
         <!-- * * Activate your form at https://startbootstrap.com/solution/contact-forms * *-->
