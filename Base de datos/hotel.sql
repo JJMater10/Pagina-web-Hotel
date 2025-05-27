@@ -1,135 +1,309 @@
--- MySQL Workbench Forward Engineering
+-- phpMyAdmin SQL Dump
+-- version 5.2.1
+-- https://www.phpmyadmin.net/
+--
+-- Servidor: 127.0.0.1
+-- Tiempo de generación: 01-05-2025 a las 00:23:58
+-- Versión del servidor: 10.4.32-MariaDB
+-- Versión de PHP: 8.2.12
 
-SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
-SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
-SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
-
--- -----------------------------------------------------
--- Schema hotel
--- -----------------------------------------------------
-
--- -----------------------------------------------------
--- Schema hotel
--- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `hotel` DEFAULT CHARACTER SET utf8 ;
-USE `hotel` ;
-
--- -----------------------------------------------------
--- Table `hotel`.`cliente`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `hotel`.`cliente` (
-  `idcliente` INT NOT NULL AUTO_INCREMENT,
-  `nom_client` VARCHAR(45) NOT NULL,
-  `epelli_client` VARCHAR(45) NOT NULL,
-  `edad_client` INT NOT NULL,
-  `iden_client` INT NOT NULL,
-  `tel_client` INT NOT NULL,
-  `email_client` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`idcliente`))
-ENGINE = InnoDB;
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
 
 
--- -----------------------------------------------------
--- Table `hotel`.`medio_pag`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `hotel`.`medio_pag` (
-  `idmedio_pag` INT NOT NULL AUTO_INCREMENT,
-  `tipo_pag` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`idmedio_pag`))
-ENGINE = InnoDB;
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
 
+--
+-- Base de datos: `hotel`
+--
 
--- -----------------------------------------------------
--- Table `hotel`.`emple_recep`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `hotel`.`emple_recep` (
-  `idemple_recep` INT NOT NULL AUTO_INCREMENT,
-  `nom_cecep` VARCHAR(45) NOT NULL,
-  `edad_recep` INT NOT NULL,
-  `tel_recep` INT NOT NULL,
-  `ident_recep` INT NOT NULL,
-  `email_recep` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`idemple_recep`))
-ENGINE = InnoDB;
+-- --------------------------------------------------------
 
+--
+-- Estructura de tabla para la tabla `cliente`
+--
 
--- -----------------------------------------------------
--- Table `hotel`.`habitacion`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `hotel`.`habitacion` (
-  `idhabitacion` INT NOT NULL AUTO_INCREMENT,
-  `nom_hab` VARCHAR(45) NOT NULL,
-  `precio_hab` INT NOT NULL,
-  PRIMARY KEY (`idhabitacion`))
-ENGINE = InnoDB;
+CREATE TABLE `cliente` (
+  `idcliente` int(11) NOT NULL,
+  `prim_nom_client` varchar(45) NOT NULL,
+  `seg_nom_client` varchar(45) DEFAULT NULL,
+  `prim_apelli_client` varchar(45) NOT NULL,
+  `seg_apelli_client` varchar(45) NOT NULL,
+  `edad_client` varchar(45) NOT NULL,
+  `iden_client` varchar(45) NOT NULL,
+  `tel_client` varchar(45) NOT NULL,
+  `email_client` varchar(45) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Volcado de datos para la tabla `cliente`
+--
 
--- -----------------------------------------------------
--- Table `hotel`.`hospedaje`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `hotel`.`hospedaje` (
-  `idhospedaje` INT NOT NULL AUTO_INCREMENT,
-  `fecha_entra` DATE NOT NULL,
-  `fecha_sal` DATE NOT NULL,
-  `habitacion_idhabitacion` INT NOT NULL,
-  `medio_pag_idmedio_pag` INT NOT NULL,
-  PRIMARY KEY (`idhospedaje`, `habitacion_idhabitacion`, `medio_pag_idmedio_pag`),
-  INDEX `fk_hospedaje_habitacion_idx` (`habitacion_idhabitacion` ASC) VISIBLE,
-  INDEX `fk_hospedaje_medio_pag1_idx` (`medio_pag_idmedio_pag` ASC) VISIBLE,
-  CONSTRAINT `fk_hospedaje_habitacion`
-    FOREIGN KEY (`habitacion_idhabitacion`)
-    REFERENCES `hotel`.`habitacion` (`idhabitacion`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_hospedaje_medio_pag1`
-    FOREIGN KEY (`medio_pag_idmedio_pag`)
-    REFERENCES `hotel`.`medio_pag` (`idmedio_pag`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+INSERT INTO `cliente` (`idcliente`, `prim_nom_client`, `seg_nom_client`, `prim_apelli_client`, `seg_apelli_client`, `edad_client`, `iden_client`, `tel_client`, `email_client`) VALUES
+(1, 'Andres', 'Felipe', 'Mosquera', 'Rincon', '23', '12356765', '321345546', 'andresfel@gmail.com'),
+(2, 'lucas', 'fernado ', 'alvaro', 'perez', '25', '1231344', '234252454', 'lucas@gmail.com'),
+(3, 'Juan', 'Ricardo ', 'diaz', 'torres', '29', '1231344', '234252454', 'juan@gmail.com'),
+(4, 'juan ', 'perez', 'diaz', 'baron', '30', '1255443', '34235523', 'juan@gmail.com'),
+(5, 'pedro', 'jose', 'gutierrez', 'alvaro', '23', '244325', '1234566764', 'predro@gmail.com'),
+(10, 'luis', 'ramiro', 'lopez', 'casca', '19', '244325', '1256443965', 'luis@gmail.com');
 
+-- --------------------------------------------------------
 
--- -----------------------------------------------------
--- Table `hotel`.`cuenta_recep`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `hotel`.`cuenta_recep` (
-  `idcuenta_recep` INT NOT NULL,
-  `clave` VARCHAR(45) NOT NULL,
-  `emple_recep_idemple_recep` INT NOT NULL,
-  PRIMARY KEY (`idcuenta_recep`, `emple_recep_idemple_recep`),
-  INDEX `fk_cuenta_recep_emple_recep1_idx` (`emple_recep_idemple_recep` ASC) VISIBLE,
-  CONSTRAINT `fk_cuenta_recep_emple_recep1`
-    FOREIGN KEY (`emple_recep_idemple_recep`)
-    REFERENCES `hotel`.`emple_recep` (`idemple_recep`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+--
+-- Estructura de tabla para la tabla `cuenta_recep`
+--
 
+CREATE TABLE `cuenta_recep` (
+  `idcuenta_recep` int(11) NOT NULL,
+  `clave` varchar(255) NOT NULL,
+  `emple_recep_idemple_recep` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- -----------------------------------------------------
--- Table `hotel`.`hospedaje_has_cliente`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `hotel`.`hospedaje_has_cliente` (
-  `hospedaje_idhospedaje` INT NOT NULL,
-  `hospedaje_habitacion_idhabitacion` INT NOT NULL,
-  `hospedaje_medio_pag_idmedio_pag` INT NOT NULL,
-  `cliente_idcliente` INT NOT NULL,
-  PRIMARY KEY (`hospedaje_idhospedaje`, `hospedaje_habitacion_idhabitacion`, `hospedaje_medio_pag_idmedio_pag`, `cliente_idcliente`),
-  INDEX `fk_hospedaje_has_cliente_cliente1_idx` (`cliente_idcliente` ASC) VISIBLE,
-  INDEX `fk_hospedaje_has_cliente_hospedaje1_idx` (`hospedaje_idhospedaje` ASC, `hospedaje_habitacion_idhabitacion` ASC, `hospedaje_medio_pag_idmedio_pag` ASC) VISIBLE,
-  CONSTRAINT `fk_hospedaje_has_cliente_hospedaje1`
-    FOREIGN KEY (`hospedaje_idhospedaje` , `hospedaje_habitacion_idhabitacion` , `hospedaje_medio_pag_idmedio_pag`)
-    REFERENCES `hotel`.`hospedaje` (`idhospedaje` , `habitacion_idhabitacion` , `medio_pag_idmedio_pag`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_hospedaje_has_cliente_cliente1`
-    FOREIGN KEY (`cliente_idcliente`)
-    REFERENCES `hotel`.`cliente` (`idcliente`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+--
+-- Volcado de datos para la tabla `cuenta_recep`
+--
 
+INSERT INTO `cuenta_recep` (`idcuenta_recep`, `clave`, `emple_recep_idemple_recep`) VALUES
+(1, '$2y$10$DA1VekcfJw.2AC5cqSIxbO5bkeArZ1qXxTxaFYwVHTypTVboTVOwS', 1),
+(2, '0987', 2);
 
-SET SQL_MODE=@OLD_SQL_MODE;
-SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
-SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `emple_recep`
+--
+
+CREATE TABLE `emple_recep` (
+  `idemple_recep` int(11) NOT NULL,
+  `nom_cecep` varchar(45) NOT NULL,
+  `edad_recep` int(11) NOT NULL,
+  `tel_recep` int(11) NOT NULL,
+  `ident_recep` int(11) NOT NULL,
+  `email_recep` varchar(45) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `emple_recep`
+--
+
+INSERT INTO `emple_recep` (`idemple_recep`, `nom_cecep`, `edad_recep`, `tel_recep`, `ident_recep`, `email_recep`) VALUES
+(1, 'Admin', 23, 12533456, 123456789, 'admin@gmail.com'),
+(2, 'prueba', 30, 9876, 987654321, 'prueba@gmail.com');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `habitacion`
+--
+
+CREATE TABLE `habitacion` (
+  `idhabitacion` int(11) NOT NULL,
+  `nom_hab` varchar(45) NOT NULL,
+  `hab_dispo` int(11) DEFAULT NULL,
+  `precio_hab` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `habitacion`
+--
+
+INSERT INTO `habitacion` (`idhabitacion`, `nom_hab`, `hab_dispo`, `precio_hab`) VALUES
+(1, 'Habitación Estándar', 10, 60000),
+(2, 'Suit Junior', 10, 200000),
+(3, 'Suit Presidencial', 10, 550000);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `hospedaje`
+--
+
+CREATE TABLE `hospedaje` (
+  `idhospedaje` int(11) NOT NULL,
+  `fecha_entra` date NOT NULL,
+  `fecha_sal` date NOT NULL,
+  `cant_person` int(11) NOT NULL,
+  `habitacion_idhabitacion` int(11) NOT NULL,
+  `medio_pag_idmedio_pag` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `hospedaje`
+--
+
+INSERT INTO `hospedaje` (`idhospedaje`, `fecha_entra`, `fecha_sal`, `cant_person`, `habitacion_idhabitacion`, `medio_pag_idmedio_pag`) VALUES
+(1, '2025-03-25', '2025-03-28', 1, 1, 1),
+(2, '2025-03-26', '2025-03-27', 2, 2, 2),
+(3, '2025-03-25', '2025-03-26', 1, 3, 3),
+(4, '2025-03-25', '2025-03-26', 1, 3, 3),
+(5, '2025-04-03', '2025-04-04', 3, 1, 1),
+(10, '2025-04-03', '2025-04-04', 2, 3, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `hospedaje_has_cliente`
+--
+
+CREATE TABLE `hospedaje_has_cliente` (
+  `hospedaje_idhospedaje` int(11) NOT NULL,
+  `hospedaje_habitacion_idhabitacion` int(11) NOT NULL,
+  `hospedaje_medio_pag_idmedio_pag` int(11) NOT NULL,
+  `cliente_idcliente` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `hospedaje_has_cliente`
+--
+
+INSERT INTO `hospedaje_has_cliente` (`hospedaje_idhospedaje`, `hospedaje_habitacion_idhabitacion`, `hospedaje_medio_pag_idmedio_pag`, `cliente_idcliente`) VALUES
+(1, 1, 1, 1),
+(2, 2, 2, 2),
+(3, 3, 3, 3),
+(4, 3, 3, 4),
+(5, 1, 1, 5),
+(10, 3, 1, 10);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `medio_pag`
+--
+
+CREATE TABLE `medio_pag` (
+  `idmedio_pag` int(11) NOT NULL,
+  `tipo_pag` varchar(45) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `medio_pag`
+--
+
+INSERT INTO `medio_pag` (`idmedio_pag`, `tipo_pag`) VALUES
+(1, 'Efectivo'),
+(2, 'Tarjeta de crédito '),
+(3, 'Transferencia bancaria');
+
+--
+-- Índices para tablas volcadas
+--
+
+--
+-- Indices de la tabla `cliente`
+--
+ALTER TABLE `cliente`
+  ADD PRIMARY KEY (`idcliente`);
+
+--
+-- Indices de la tabla `cuenta_recep`
+--
+ALTER TABLE `cuenta_recep`
+  ADD PRIMARY KEY (`idcuenta_recep`,`emple_recep_idemple_recep`),
+  ADD KEY `fk_cuenta_recep_emple_recep1_idx` (`emple_recep_idemple_recep`);
+
+--
+-- Indices de la tabla `emple_recep`
+--
+ALTER TABLE `emple_recep`
+  ADD PRIMARY KEY (`idemple_recep`);
+
+--
+-- Indices de la tabla `habitacion`
+--
+ALTER TABLE `habitacion`
+  ADD PRIMARY KEY (`idhabitacion`);
+
+--
+-- Indices de la tabla `hospedaje`
+--
+ALTER TABLE `hospedaje`
+  ADD PRIMARY KEY (`idhospedaje`,`habitacion_idhabitacion`,`medio_pag_idmedio_pag`),
+  ADD KEY `fk_hospedaje_habitacion_idx` (`habitacion_idhabitacion`),
+  ADD KEY `fk_hospedaje_medio_pag1_idx` (`medio_pag_idmedio_pag`);
+
+--
+-- Indices de la tabla `hospedaje_has_cliente`
+--
+ALTER TABLE `hospedaje_has_cliente`
+  ADD PRIMARY KEY (`hospedaje_idhospedaje`,`hospedaje_habitacion_idhabitacion`,`hospedaje_medio_pag_idmedio_pag`,`cliente_idcliente`),
+  ADD KEY `fk_hospedaje_has_cliente_cliente1_idx` (`cliente_idcliente`),
+  ADD KEY `fk_hospedaje_has_cliente_hospedaje1_idx` (`hospedaje_idhospedaje`,`hospedaje_habitacion_idhabitacion`,`hospedaje_medio_pag_idmedio_pag`);
+
+--
+-- Indices de la tabla `medio_pag`
+--
+ALTER TABLE `medio_pag`
+  ADD PRIMARY KEY (`idmedio_pag`);
+
+--
+-- AUTO_INCREMENT de las tablas volcadas
+--
+
+--
+-- AUTO_INCREMENT de la tabla `cliente`
+--
+ALTER TABLE `cliente`
+  MODIFY `idcliente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
+-- AUTO_INCREMENT de la tabla `cuenta_recep`
+--
+ALTER TABLE `cuenta_recep`
+  MODIFY `idcuenta_recep` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT de la tabla `emple_recep`
+--
+ALTER TABLE `emple_recep`
+  MODIFY `idemple_recep` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT de la tabla `habitacion`
+--
+ALTER TABLE `habitacion`
+  MODIFY `idhabitacion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT de la tabla `hospedaje`
+--
+ALTER TABLE `hospedaje`
+  MODIFY `idhospedaje` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
+-- AUTO_INCREMENT de la tabla `medio_pag`
+--
+ALTER TABLE `medio_pag`
+  MODIFY `idmedio_pag` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- Restricciones para tablas volcadas
+--
+
+--
+-- Filtros para la tabla `cuenta_recep`
+--
+ALTER TABLE `cuenta_recep`
+  ADD CONSTRAINT `fk_cuenta_recep_emple_recep1` FOREIGN KEY (`emple_recep_idemple_recep`) REFERENCES `emple_recep` (`idemple_recep`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Filtros para la tabla `hospedaje`
+--
+ALTER TABLE `hospedaje`
+  ADD CONSTRAINT `fk_hospedaje_habitacion` FOREIGN KEY (`habitacion_idhabitacion`) REFERENCES `habitacion` (`idhabitacion`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_hospedaje_medio_pag1` FOREIGN KEY (`medio_pag_idmedio_pag`) REFERENCES `medio_pag` (`idmedio_pag`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Filtros para la tabla `hospedaje_has_cliente`
+--
+ALTER TABLE `hospedaje_has_cliente`
+  ADD CONSTRAINT `fk_hospedaje_has_cliente_cliente1` FOREIGN KEY (`cliente_idcliente`) REFERENCES `cliente` (`idcliente`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_hospedaje_has_cliente_hospedaje1` FOREIGN KEY (`hospedaje_idhospedaje`,`hospedaje_habitacion_idhabitacion`,`hospedaje_medio_pag_idmedio_pag`) REFERENCES `hospedaje` (`idhospedaje`, `habitacion_idhabitacion`, `medio_pag_idmedio_pag`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

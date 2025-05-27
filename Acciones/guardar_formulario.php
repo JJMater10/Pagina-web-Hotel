@@ -1,6 +1,6 @@
 <?php
 session_start();
-include '../Conexión BD/conexion.php';
+include '../Conexión_BD/conexion.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     function limpiarDato($dato) {

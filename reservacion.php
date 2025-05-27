@@ -1,7 +1,7 @@
 
 <?php
 session_start(); // Iniciar la sesión para verificar alertas
-require_once 'Conexión BD/conexion.php'; // Incluir la conexión a la base de datos
+require_once 'Conexión_BD/conexion.php'; // Incluir la conexión a la base de datos
 
 // Verificar si hay una reserva exitosa y mostrar la alerta
 if (isset($_SESSION['reserva_exitosa']) && $_SESSION['reserva_exitosa']) {
