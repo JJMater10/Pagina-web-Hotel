@@ -61,22 +61,22 @@
 **Bienvenida:** Al inicio de la página web, se mostrará una cálida bienvenida al usuario junto con una imagen de fondo representativa del hotel. En esta sección, se podrá comenzar el registro de la reservación.
 
 <p align="center">
-  <img width="70%" src="https://github.com/user-attachments/assets/fba04d7d-6a61-4fdb-8f1f-4399becacdb9">
+  <img width="70%" src="https://github.com/user-attachments/assets/f18079eb-fb47-4854-be72-08a77e875db2">
 </p>
 
 **Formulario de reservación:** Al desplazarse hacia abajo, aparecerá un formulario en el que se solicitará la información necesaria para completar la reservación de manera sencilla y eficiente.
 
 <p align="center">
-  <img width="70%" src="https://github.com/user-attachments/assets/1cd2b0cf-6f65-4ef7-b044-aa36f1f28bc0">
+  <img width="70%" src="https://github.com/user-attachments/assets/ac767301-413c-4853-84a7-17b13eb84058">
 </p>
 
 <p align="center">
-  <img width="70%" src="https://github.com/user-attachments/assets/33011a35-c983-4529-aca0-935df768a2f0">
+  <img width="70%" src="https://github.com/user-attachments/assets/f72a2e02-02c6-4eba-bbfb-90a8cdfd7ee4">
 </p>
 
 **Contacto:** Por último, se incluirá una sección para que los usuarios puedan comunicarse con el hotel ante cualquier duda, inquietud o sugerencia.
 
 <p align="center">
-  <img width="70%" src="https://github.com/user-attachments/assets/e16e1042-3f67-465b-b49d-f31f287fba4c">
+  <img width="70%" src="https://github.com/user-attachments/assets/c0d7fa91-3fdf-4aa7-b767-f01dfaeb6f00">
 </p>
 
