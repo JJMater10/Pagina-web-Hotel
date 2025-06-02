@@ -177,7 +177,7 @@ include("consultas_IN/consultar_perfil.php");
                             <i class="icon-speedometer menu-icon"></i><span class="nav-text">Principal</span>
                         </a>
                         <ul aria-expanded="false">
-                            <li><a href="../Menu_recep/index.html">Administrar</a></li>
+                            <li><a href="../Menu_recep/index.php">Administrar</a></li>
                             <!-- <li><a href="./index-2.html">Home 2</a></li> -->
                         </ul>
                     </li>

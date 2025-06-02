@@ -1,3 +1,16 @@
+<?php
+session_start();
+if (!isset($_SESSION['nom_cecep'])) {
+    header("Location: ../inicio_sesion/app-profile.php");
+    exit();
+}
+
+// ❗ Desactivar caché del navegador para evitar "volver atrás"
+header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+header("Cache-Control: post-check=0, pre-check=0", false);
+header("Pragma: no-cache");
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -5,6 +18,11 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1">
+    <!-- Evitar que el navegador guarde páginas anteriores -->
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+
     <title>Quixlab - Bootstrap Admin Dashboard Template by Themefisher.com</title>
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="images/favicon.png">
@@ -82,17 +100,11 @@
                                 <div class="dropdown-content-body">
                                     <ul>
                                         <li>
-                                            <a href="app-profile.html"><i class="icon-user"></i> <span>Profile</span></a>
-                                        </li>
-                                        <li>
-                                            <a href="email-inbox.html"><i class="icon-envelope-open"></i> <span>Inbox</span> <div class="badge gradient-3 badge-pill badge-primary">3</div></a>
+                                            <a href="../inicio_sesion/app-profile.php"><i class="icon-user"></i> <span>Perfil</span></a>
                                         </li>
                                         
                                         <hr class="my-2">
-                                        <li>
-                                            <a href="page-lock.html"><i class="icon-lock"></i> <span>Lock Screen</span></a>
-                                        </li>
-                                        <li><a href="page-login.html"><i class="icon-key"></i> <span>Logout</span></a></li>
+                                        <li><a href="../inicio_sesion/page-login.php"><i class="icon-key"></i> <span>Cerrar Sesión</span></a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -117,7 +129,7 @@
                             <i class="icon-speedometer menu-icon"></i><span class="nav-text">Dashboard</span>
                         </a>
                         <ul aria-expanded="false">
-                            <li><a href="./index.html">Inicio</a></li>
+                            <li><a href="./index.php">Inicio</a></li>
                             <!-- <li><a href="./index-2.html">Home 2</a></li> -->
                         </ul>
                         <ul aria-expanded="false">
@@ -125,7 +137,7 @@
                             <!-- <li><a href="./index-2.html">Home 2</a></li> -->
                         </ul>
                         <ul aria-expanded="false">
-                            <li><a href="./grafica-reservas.html">Graficas Reservas</a></li>
+                            <li><a href="./grafica-reservas.php">Graficas Reservas</a></li>
                             <!-- <li><a href="./index-2.html">Home 2</a></li> -->
                         </ul>
                     </li>
@@ -206,6 +218,13 @@
     <script src="js_MR/styleSwitcher.js"></script>
     <script src="./plugins/chart.js/Chart.bundle.min.js"></script>
     <script src="./js_MR/plugins-init/chartjs-init.js"></script>
+
+    <!-- Script para evitar que el usuario vuelva a la página anterior -->
+    <script>
+    window.history.forward();
+    window.onunload = function () {};
+</script>
+
 
 </body>
 
