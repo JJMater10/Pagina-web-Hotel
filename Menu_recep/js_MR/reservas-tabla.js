@@ -16,6 +16,7 @@ $(document).ready(function () {
     <td>${reserva.fecha_entra}</td>
     <td>${reserva.fecha_sal}</td>
     <td>${reserva.habitacion}</td>
+    <td>${reserva.estado || 'Sin estado'}</td> <!-- Nueva columna -->
     <td>
         <span>
             <a href="#" 

@@ -127,31 +127,24 @@ header("Pragma: no-cache");
         <!--**********************************
             Sidebar start
         ***********************************-->
-        <div class="nk-sidebar">           
-            <div class="nk-nav-scroll">
-                <ul class="metismenu" id="menu">
-                    <li class="nav-label">Menú</li>
-                    <li>
-                        <a class="has-arrow" href="javascript:void()" aria-expanded="false">
-                            <i class="icon-speedometer menu-icon"></i><span class="nav-text">Principal</span>
-                        </a>
-                        <ul aria-expanded="false">
-                            <li><a href="./index.php">Inicio</a></li>
-                            <!-- <li><a href="./index-2.html">Home 2</a></li> -->
-                        </ul>
-                        <ul aria-expanded="false">
-                            <li><a href="./historial-reservas.html">Historial De Reservas</a></li>
-                            <!-- <li><a href="./index-2.html">Home 2</a></li> -->
-                        </ul>
-                        <ul aria-expanded="false">
-                            <li><a href="./grafica-reservas.php">Graficas Reservas</a></li>
-                            <!-- <li><a href="./index-2.html">Home 2</a></li> -->
-                        </ul>
-                    </li>
-                    
+       <div class="nk-sidebar">           
+    <div class="nk-nav-scroll">
+        <ul class="metismenu" id="menu">
+            <li class="nav-label">Menú</li>
+            <li>
+                <a class="has-arrow" href="javascript:void()" aria-expanded="false">
+                    <i class="icon-speedometer menu-icon"></i><span class="nav-text">Principal</span>
+                </a>
+                <ul aria-expanded="false">
+                    <li><a href="./index.php">Inicio</a></li>
+                    <li><a href="./historial-reservas.html">Historial De Reservas</a></li>
+                    <li><a href="./grafica-reservas.php">Gráficas Reservas</a></li>
                 </ul>
-            </div>
-        </div>
+            </li>
+        </ul>
+    </div>
+</div>
+
         <!--**********************************
             Sidebar end
         ***********************************-->
@@ -210,6 +203,7 @@ header("Pragma: no-cache");
                                                 <th scope="col">Fecha Llegada</th>
                                                 <th scope="col">Fecha Salida</th>
                                                 <th scope="col">Habitación</th>
+                                                <th>Estado</th>
                                                 <th scope="col">Acción</th>
                                             </tr>
                                         </thead>
