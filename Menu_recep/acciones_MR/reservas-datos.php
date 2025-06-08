@@ -9,6 +9,7 @@ $sql = "SELECT
             h.fecha_sal,
             ha.nom_hab AS habitacion,
             eh.tipo_estado AS estado,
+            eh.idestado_hab AS idestado, -- ← IMPORTANTE: incluir idestado
             ha.idhabitacion
         FROM hospedaje h
         INNER JOIN hospedaje_has_cliente hc ON 

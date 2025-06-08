@@ -8,14 +8,16 @@ $tel = $_POST['telefono'];
 $entrada = $_POST['fecha_entra'];
 $salida = $_POST['fecha_sal'];
 $idhab = $_POST['habitacion'];
+$estado = $_POST['estado'];
 
-// Paso 1: Obtener hospedaje relacionado
+// Paso 1: Obtener hospedaje específico (último registro del cliente)
 $sqlHospedaje = "
     SELECT h.idhospedaje, h.medio_pag_idmedio_pag 
     FROM hospedaje h
     INNER JOIN hospedaje_has_cliente hc ON h.idhospedaje = hc.hospedaje_idhospedaje
     INNER JOIN cliente c ON hc.cliente_idcliente = c.idcliente
     WHERE c.iden_client = ?
+    ORDER BY h.idhospedaje DESC
     LIMIT 1
 ";
 $stmtHosp = $conn->prepare($sqlHospedaje);
@@ -34,46 +36,31 @@ if (!$hosp) {
 $idhospedaje = $hosp['idhospedaje'];
 $medio_pago = $hosp['medio_pag_idmedio_pag'];
 
-// ✅ PRIMERO: actualizamos hospedaje (el padre)
-$sqlUpdateHospedaje = "
+// ✅ Actualizar hospedaje y cliente
+$sqlUpdate = "
     UPDATE hospedaje h
-    INNER JOIN hospedaje_has_cliente hc ON h.idhospedaje = hc.hospedaje_idhospedaje
-    INNER JOIN cliente c ON hc.cliente_idcliente = c.idcliente
+    JOIN hospedaje_has_cliente hc ON h.idhospedaje = hc.hospedaje_idhospedaje
+    JOIN cliente c ON hc.cliente_idcliente = c.idcliente
     SET 
         h.fecha_entra = ?, 
         h.fecha_sal = ?, 
         h.habitacion_idhabitacion = ?, 
+        h.estado_hab_idestado_hab = ?,
         c.tel_client = ?
-    WHERE c.iden_client = ?
+    WHERE h.idhospedaje = ?
+      AND h.medio_pag_idmedio_pag = ?
 ";
-
-$stmtUpdate = $conn->prepare($sqlUpdateHospedaje);
-$stmtUpdate->bind_param("ssisi", $entrada, $salida, $idhab, $tel, $ident);
+$stmtUpdate = $conn->prepare($sqlUpdate);
+$stmtUpdate->bind_param("ssiiiii", $entrada, $salida, $idhab, $estado, $tel, $idhospedaje, $medio_pago);
 
 if (!$stmtUpdate->execute()) {
-    echo "error al actualizar hospedaje/cliente: " . $stmtUpdate->error;
+    echo "error al actualizar: " . $stmtUpdate->error;
     $stmtUpdate->close();
     $conn->close();
     exit;
 }
+
 $stmtUpdate->close();
-
-// ✅ LUEGO: actualizamos hospedaje_has_cliente (el hijo)
-$sqlRelacion = "
-    UPDATE hospedaje_has_cliente
-    SET hospedaje_habitacion_idhabitacion = ?
-    WHERE hospedaje_idhospedaje = ? 
-      AND hospedaje_medio_pag_idmedio_pag = ?
-";
-$stmtRelacion = $conn->prepare($sqlRelacion);
-$stmtRelacion->bind_param("iii", $idhab, $idhospedaje, $medio_pago);
-
-if (!$stmtRelacion->execute()) {
-    echo "error al actualizar relación: " . $stmtRelacion->error;
-} else {
-    echo "ok";
-}
-
-$stmtRelacion->close();
+echo "ok";
 $conn->close();
 ?>

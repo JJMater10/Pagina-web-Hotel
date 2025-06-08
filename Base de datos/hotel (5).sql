@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 03-06-2025 a las 22:28:41
+-- Tiempo de generación: 05-06-2025 a las 23:59:14
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -49,7 +49,8 @@ INSERT INTO `cliente` (`idcliente`, `prim_nom_client`, `seg_nom_client`, `prim_a
 (3, 'Juan', 'Ricardo ', 'diaz', 'torres', '29', '1231344', '234252454', 'juan@gmail.com'),
 (4, 'juan ', 'perez', 'diaz', 'baron', '30', '1255443', '34235523', 'juan@gmail.com'),
 (5, 'pedro', 'jose', 'gutierrez', 'alvaro', '23', '244325', '125644396', 'predro@gmail.com'),
-(10, 'luis', 'ramiro', 'lopez', 'casca', '19', '244325', '125644396', 'luis@gmail.com');
+(10, 'luis', 'ramiro', 'lopez', 'casca', '19', '244325', '125644396', 'luis@gmail.com'),
+(11, 'Pablo', 'Juan', 'Torres', 'Diaz', '34', '13675532', '7634233445', 'pablo@gmail.com');
 
 -- --------------------------------------------------------
 
@@ -161,7 +162,18 @@ INSERT INTO `hospedaje` (`idhospedaje`, `fecha_entra`, `fecha_sal`, `cant_person
 (2, '2025-03-26', '2025-03-27', 2, 2, 2, NULL),
 (3, '2025-03-25', '2025-03-26', 1, 3, 3, NULL),
 (5, '2025-04-03', '2025-04-05', 3, 3, 1, NULL),
-(10, '2025-04-03', '2025-04-05', 2, 3, 1, NULL);
+(10, '2025-04-03', '2025-04-05', 2, 3, 1, NULL),
+(11, '2025-06-03', '2025-06-10', 2, 1, 1, 1);
+
+--
+-- Disparadores `hospedaje`
+--
+DELIMITER $$
+CREATE TRIGGER `insertar_estado_reservado` BEFORE INSERT ON `hospedaje` FOR EACH ROW BEGIN
+  SET NEW.estado_hab_idestado_hab = 1;
+END
+$$
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -185,7 +197,8 @@ INSERT INTO `hospedaje_has_cliente` (`hospedaje_idhospedaje`, `hospedaje_habitac
 (2, 2, 2, 2),
 (3, 3, 3, 3),
 (5, 3, 1, 5),
-(10, 3, 1, 10);
+(10, 3, 1, 10),
+(11, 1, 1, 11);
 
 -- --------------------------------------------------------
 
@@ -273,7 +286,7 @@ ALTER TABLE `medio_pag`
 -- AUTO_INCREMENT de la tabla `cliente`
 --
 ALTER TABLE `cliente`
-  MODIFY `idcliente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `idcliente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT de la tabla `cuenta_recep`
@@ -303,7 +316,7 @@ ALTER TABLE `habitacion`
 -- AUTO_INCREMENT de la tabla `hospedaje`
 --
 ALTER TABLE `hospedaje`
-  MODIFY `idhospedaje` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `idhospedaje` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT de la tabla `medio_pag`

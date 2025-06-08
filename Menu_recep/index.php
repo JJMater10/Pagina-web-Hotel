@@ -278,6 +278,12 @@ header("Pragma: no-cache");
                     <!-- Las opciones se llenarán con JS -->
                             </select>
                         </div>
+                        <div class="form-group">
+                            <label for="edit-estado">Estado</label>
+                            <select class="form-control" id="edit-estado" name="estado">
+                                <!-- Se llena dinámicamente con JS -->
+                            </select>
+                        </div>
                         </form>
                     </div>
                     <div class="modal-footer">

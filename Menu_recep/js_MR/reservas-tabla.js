@@ -28,6 +28,7 @@ $(document).ready(function () {
             data-salida="${reserva.fecha_sal}"
             data-habitacion="${reserva.habitacion}"
             data-idhabitacion="${reserva.idhabitacion}"
+            data-idestado="${reserva.idestado}" 
             data-toggle="modal"
             data-target="#modalEditarReserva"
             title="Editar">
@@ -67,25 +68,36 @@ $(document).ready(function () {
     $('#edit-tel').val($(this).data('telefono'));
     $('#edit-entrada').val($(this).data('entrada'));
     $('#edit-salida').val($(this).data('salida'));
-    $('#edit-habitacion').val($(this).data('habitacion'));
+
+   const idHabitacion = $(this).data('idhabitacion');
+const idEstado = $(this).data('idestado');
+
+// Carga las habitaciones y selecciona la correspondiente
+cargarHabitaciones(idHabitacion);
+
+// Carga los estados y selecciona el actual
+cargarEstados(idEstado);
+
+
 });
 });
+
 
 
 // Función para cargar las habitaciones en el select del modal de edición
 // Esta función se llama al cargar la página y cada vez que se abre el modal de edición
-function cargarHabitaciones() {
+function cargarHabitaciones(habitacionSeleccionada = null) {
     $.ajax({
         url: "acciones_MR/listar-habitaciones.php",
         method: "GET",
         dataType: "json",
         success: function (data) {
             const select = $('#edit-habitacion');
-            select.empty(); // Limpia el select
+            select.empty();
 
-            // Agrega cada habitación como opción
             data.forEach(function (hab) {
-                select.append(`<option value="${hab.idhabitacion}">${hab.nom_hab}</option>`);
+                const selected = (habitacionSeleccionada == hab.idhabitacion) ? 'selected' : '';
+                select.append(`<option value="${hab.idhabitacion}" ${selected}>${hab.nom_hab}</option>`);
             });
         },
         error: function (err) {
@@ -94,23 +106,9 @@ function cargarHabitaciones() {
     });
 }
 
+
 // Llamamos la función una vez al cargar
 cargarHabitaciones();
-
-// Función para guardar los cambios de la reserva
-// Esta función se llama al hacer clic en el botón "Guardar Cambios"
-$(document).on('click', '.editar-reserva', function () {
-    $('#edit-nombre').val($(this).data('nombre'));
-    $('#edit-ident').val($(this).data('identificacion'));
-    $('#edit-tel').val($(this).data('telefono'));
-    $('#edit-entrada').val($(this).data('entrada'));
-    $('#edit-salida').val($(this).data('salida'));
-
-    // Espera 200 ms y selecciona la habitación correspondiente
-    setTimeout(() => {
-        $('#edit-habitacion').val($(this).data('idhabitacion'));
-    }, 200);
-});
 
 
 // Función para guardar los cambios de la reserva
@@ -121,7 +119,8 @@ $('#guardarCambios').on('click', function () {
         telefono: $('#edit-tel').val(),
         fecha_entra: $('#edit-entrada').val(),
         fecha_sal: $('#edit-salida').val(),
-        habitacion: $('#edit-habitacion').val()
+        habitacion: $('#edit-habitacion').val(),
+        estado: $('#edit-estado').val()
     };
 
     $.ajax({
@@ -209,3 +208,25 @@ $(document).on('click', '.eliminar-reserva', function (e) {
         }
     });
 });
+
+//Función para cargar los estados en el select del modal de edición
+function cargarEstados(estadoSeleccionado = null) {
+    $.ajax({
+        url: "acciones_MR/listar-estados.php",
+        method: "GET",
+        dataType: "json",
+        success: function (data) {
+            const select = $('#edit-estado');
+            select.empty();
+
+            data.forEach(function (estado) {
+                const selected = (estadoSeleccionado == estado.idestado_hab) ? 'selected' : '';
+                select.append(`<option value="${estado.idestado_hab}" ${selected}>${estado.tipo_estado}</option>`);
+            });
+        },
+        error: function (err) {
+            console.error("Error al cargar estados:", err);
+        }
+    });
+}
+
