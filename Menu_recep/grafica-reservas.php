@@ -23,7 +23,7 @@ header("Pragma: no-cache");
     <meta http-equiv="Pragma" content="no-cache" />
     <meta http-equiv="Expires" content="0" />
 
-    <title>Quixlab - Bootstrap Admin Dashboard Template by Themefisher.com</title>
+    <title>Gráficas reservas</title>
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="images/favicon.png">
     <!-- Custom Stylesheet -->
@@ -31,6 +31,8 @@ header("Pragma: no-cache");
     <!-- PDF's -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
 
 
 </head>
@@ -92,10 +94,11 @@ header("Pragma: no-cache");
                 <div class="header-right">
                     <ul class="clearfix">
                         <li class="icons dropdown">
-                            <div class="user-img c-pointer position-relative"   data-toggle="dropdown">
+                            <div class="user-img c-pointer position-relative" data-toggle="dropdown">
                                 <span class="activity active"></span>
-                                <img src="images/user/1.png" height="40" width="40" alt="">
+                                <i class="fas fa-user-circle fa-2x text-black" style="font-size: 40px;"></i>
                             </div>
+
                             <div class="drop-down dropdown-profile   dropdown-menu">
                                 <div class="dropdown-content-body">
                                     <ul>
@@ -130,7 +133,7 @@ header("Pragma: no-cache");
                             </a>
                             <ul aria-expanded="false">
                                 <li><a href="./index.php">Inicio</a></li>
-                                <li><a href="./historial-reservas.html">Historial De Reservas</a></li>
+                                <li><a href="./historial-reservas.php">Historial De Reservas</a></li>
                                 <li><a href="./grafica-reservas.php">Gráficas Reservas</a></li>
                             </ul>
                     </li>

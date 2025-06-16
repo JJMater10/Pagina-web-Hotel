@@ -1,68 +1,52 @@
 <?php
 session_start();
-include('../../Conexión_BD/conexion.php'); // Asegúrate que esta ruta sea correcta
+require_once("../../Conexión_BD/conexion.php");
 
-// Establecer codificación para caracteres especiales
-$conn->set_charset("utf8mb4");
+// Asegurarse de que el usuario esté logueado
+if (!isset($_SESSION['nom_cecep'])) {
+    header("Location: ../inicio_sesion/page-login.php");
+    exit();
+}
 
+// Validar si llegaron los datos por POST
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    // Verifica si hay sesión activa
-    if (!isset($_SESSION['idemple_recep'])) {
-        echo "Error: No se ha iniciado sesión.";
-        exit;
-    }
 
-    // Obtener los datos del formulario
-    $idemple_recep = $_SESSION['idemple_recep'];
-    $nom_cecep = trim($_POST['nom_cecep']);
-    $edad_recep = trim($_POST['edad_recep']);
-    $tel_recep = trim($_POST['tel_recep']);
-    $email_recep = trim($_POST['email_recep']);
+    $idemple_recep = intval($_POST['idemple_recep']);
+    $nom_cecep     = trim($_POST['nom_cecep']);
+    $apelli_cecep  = trim($_POST['apellido']);
+    $edad_recep    = intval($_POST['edad_recep']);
+    $tel_recep     = trim($_POST['tel_recep']);
+    $ident_recep   = trim($_POST['ident_recep']);
+    $correo_recep  = trim($_POST['email_recep']);
 
-    // Validación básica
-    if (empty($nom_cecep) || empty($edad_recep) || empty($tel_recep) || empty($email_recep)) {
-        echo "Todos los campos son obligatorios.";
-        exit;
-    }
+    // Prepara la consulta
+    $sql = "UPDATE emple_recep 
+            SET nom_cecep = ?, 
+                apellido = ?, 
+                edad_recep = ?, 
+                tel_recep = ?, 
+                ident_recep = ?, 
+                email_recep = ?
+            WHERE idemple_recep = ?";
 
-    // Validar edad como entero positivo
-    if (!is_numeric($edad_recep) || (int)$edad_recep <= 0) {
-        echo "Edad no válida.";
-        exit;
-    }
+    if ($stmt = $conn->prepare($sql)) {
+        $stmt->bind_param("ssisssi", $nom_cecep, $apelli_cecep, $edad_recep, $tel_recep, $ident_recep, $correo_recep, $idemple_recep);
 
-    // Validar formato de teléfono (solo números, entre 7 y 15 dígitos)
-    if (!preg_match("/^[0-9]{7,15}$/", $tel_recep)) {
-        echo "Número de teléfono no válido.";
-        exit;
-    }
-
-    // Validar formato de email
-    if (!filter_var($email_recep, FILTER_VALIDATE_EMAIL)) {
-        echo "Correo electrónico no válido.";
-        exit;
-    }
-
-    // Preparar y ejecutar la actualización
-    $sql = "UPDATE emple_recep SET nom_cecep = ?, edad_recep = ?, tel_recep = ?, email_recep = ? WHERE idemple_recep = ?";
-    $stmt = $conn->prepare($sql);
-
-    if ($stmt) {
-        $stmt->bind_param("ssssi", $nom_cecep, $edad_recep, $tel_recep, $email_recep, $idemple_recep);
         if ($stmt->execute()) {
-            $_SESSION['mensaje_perfil'] = "Perfil actualizado correctamente.";
-            header("Location: ../app-profile.php");
-            exit;
+            // ✅ Actualización exitosa
+            header("Location: ../app-profile.php?exito=1");
+            exit();
         } else {
-            echo "Error al actualizar: " . $stmt->error;
+            echo "❌ Error al actualizar: " . $stmt->error;
         }
+
         $stmt->close();
     } else {
-        echo "Error al preparar la consulta: " . $conn->error;
+        echo "❌ Error al preparar la consulta: " . $conn->error;
     }
-
-    $conn->close();
 } else {
-    echo "Método no permitido.";
+    echo "❌ No se recibieron datos válidos por POST.";
 }
+
+$conn->close();
 ?>

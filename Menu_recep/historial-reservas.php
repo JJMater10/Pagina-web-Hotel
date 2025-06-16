@@ -1,10 +1,31 @@
+<?php
+session_start();
+
+// Verifica si hay sesión activa
+if (!isset($_SESSION['nom_cecep'])) {
+    header("Location: ../inicio_sesion/app-profile.php");
+    exit();
+}
+
+// Evita que el usuario use el botón "atrás" después de cerrar sesión
+header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+header("Cache-Control: post-check=0, pre-check=0", false);
+header("Pragma: no-cache");
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
+    
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1">
+        <!-- Evitar que el navegador guarde páginas anteriores -->
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
     <title>Historial Reservas</title>
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="images/favicon.png">
@@ -70,25 +91,20 @@
                 <div class="header-right">
                     <ul class="clearfix">
                         <li class="icons dropdown">
-                            <div class="user-img c-pointer position-relative"   data-toggle="dropdown">
+                            <div class="user-img c-pointer position-relative" data-toggle="dropdown">
                                 <span class="activity active"></span>
-                                <img src="images/user/1.png" height="40" width="40" alt="">
+                                <i class="fas fa-user-circle fa-2x text-black" style="font-size: 40px;"></i>
                             </div>
+
                             <div class="drop-down dropdown-profile   dropdown-menu">
                                 <div class="dropdown-content-body">
                                     <ul>
                                         <li>
-                                            <a href="app-profile.html"><i class="icon-user"></i> <span>Profile</span></a>
-                                        </li>
-                                        <li>
-                                            <a href="email-inbox.html"><i class="icon-envelope-open"></i> <span>Inbox</span> <div class="badge gradient-3 badge-pill badge-primary">3</div></a>
+                                            <a href="../inicio_sesion/app-profile.php"><i class="icon-user"></i> <span>Perfil</span></a>
                                         </li>
                                         
                                         <hr class="my-2">
-                                        <li>
-                                            <a href="page-lock.html"><i class="icon-lock"></i> <span>Lock Screen</span></a>
-                                        </li>
-                                        <li><a href="page-login.html"><i class="icon-key"></i> <span>Logout</span></a></li>
+                                        <li><a href="../inicio_sesion/page-login.php"><i class="icon-key"></i> <span>Cerrar Sesión</span></a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -105,22 +121,22 @@
             Sidebar start
         ***********************************-->
         <div class="nk-sidebar">           
-    <div class="nk-nav-scroll">
-        <ul class="metismenu" id="menu">
-            <li class="nav-label">Menú</li>
-            <li>
-                <a class="has-arrow" href="javascript:void()" aria-expanded="false">
-                    <i class="icon-speedometer menu-icon"></i><span class="nav-text">Principal</span>
-                </a>
-                <ul aria-expanded="false">
-                    <li><a href="./index.php">Inicio</a></li>
-                    <li><a href="./historial-reservas.html">Historial De Reservas</a></li>
-                    <li><a href="./grafica-reservas.php">Gráficas Reservas</a></li>
+            <div class="nk-nav-scroll">
+                <ul class="metismenu" id="menu">
+                    <li class="nav-label">Menú</li>
+                        <li>
+                            <a class="has-arrow" href="javascript:void()" aria-expanded="false">
+                                <i class="icon-speedometer menu-icon"></i><span class="nav-text">Principal</span>
+                            </a>
+                            <ul aria-expanded="false">
+                                <li><a href="./index.php">Inicio</a></li>
+                                <li><a href="./historial-reservas.php">Historial De Reservas</a></li>
+                                <li><a href="./grafica-reservas.php">Gráficas Reservas</a></li>
+                            </ul>
+                    </li>
                 </ul>
-            </li>
-        </ul>
-    </div>
-</div>
+            </div>
+        </div>
 
         <!--**********************************
             Sidebar end
@@ -223,6 +239,12 @@
 
 <script src="js_MR/historial-reservas.js"></script>
 
+
+<!-- Script para evitar que el usuario vuelva a la página anterior -->
+    <script>
+    window.history.forward();
+    window.onunload = function () {};
+</script>
 </body>
 
 </html>

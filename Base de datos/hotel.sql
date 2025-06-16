@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 01-05-2025 a las 00:23:58
+-- Tiempo de generación: 16-06-2025 a las 01:56:33
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -45,11 +45,12 @@ CREATE TABLE `cliente` (
 
 INSERT INTO `cliente` (`idcliente`, `prim_nom_client`, `seg_nom_client`, `prim_apelli_client`, `seg_apelli_client`, `edad_client`, `iden_client`, `tel_client`, `email_client`) VALUES
 (1, 'Andres', 'Felipe', 'Mosquera', 'Rincon', '23', '12356765', '321345546', 'andresfel@gmail.com'),
-(2, 'lucas', 'fernado ', 'alvaro', 'perez', '25', '1231344', '234252454', 'lucas@gmail.com'),
-(3, 'Juan', 'Ricardo ', 'diaz', 'torres', '29', '1231344', '234252454', 'juan@gmail.com'),
+(2, 'lucas', 'fernado ', 'alvaro', 'perez', '25', '1231344', '8606443', 'lucas@gmail.com'),
+(3, 'Juan', 'Ricardo ', 'diaz', 'torres', '29', '56675435', '234252454', 'juan@gmail.com'),
 (4, 'juan ', 'perez', 'diaz', 'baron', '30', '1255443', '34235523', 'juan@gmail.com'),
-(5, 'pedro', 'jose', 'gutierrez', 'alvaro', '23', '244325', '1234566764', 'predro@gmail.com'),
-(10, 'luis', 'ramiro', 'lopez', 'casca', '19', '244325', '1256443965', 'luis@gmail.com');
+(5, 'pedro', 'jose', 'gutierrez', 'alvaro', '23', '244325', '967384342', 'predro@gmail.com'),
+(10, 'luis', 'ramiro', 'lopez', 'casca', '19', '7698543', '1266548808', 'luis@gmail.com'),
+(11, 'Pablo', 'Juan', 'Torres', 'Diaz', '34', '13675532', '7634233445', 'pablo@gmail.com');
 
 -- --------------------------------------------------------
 
@@ -69,7 +70,7 @@ CREATE TABLE `cuenta_recep` (
 
 INSERT INTO `cuenta_recep` (`idcuenta_recep`, `clave`, `emple_recep_idemple_recep`) VALUES
 (1, '$2y$10$DA1VekcfJw.2AC5cqSIxbO5bkeArZ1qXxTxaFYwVHTypTVboTVOwS', 1),
-(2, '0987', 2);
+(3, '$2y$10$jUURJLPDztUQaIca7a.kmuL.zR1NmF/u.3NTq7a/ca0dqwT7YX/WC', 3);
 
 -- --------------------------------------------------------
 
@@ -80,6 +81,7 @@ INSERT INTO `cuenta_recep` (`idcuenta_recep`, `clave`, `emple_recep_idemple_rece
 CREATE TABLE `emple_recep` (
   `idemple_recep` int(11) NOT NULL,
   `nom_cecep` varchar(45) NOT NULL,
+  `apellido` varchar(60) NOT NULL,
   `edad_recep` int(11) NOT NULL,
   `tel_recep` int(11) NOT NULL,
   `ident_recep` int(11) NOT NULL,
@@ -90,9 +92,29 @@ CREATE TABLE `emple_recep` (
 -- Volcado de datos para la tabla `emple_recep`
 --
 
-INSERT INTO `emple_recep` (`idemple_recep`, `nom_cecep`, `edad_recep`, `tel_recep`, `ident_recep`, `email_recep`) VALUES
-(1, 'Admin', 23, 12533456, 123456789, 'admin@gmail.com'),
-(2, 'prueba', 30, 9876, 987654321, 'prueba@gmail.com');
+INSERT INTO `emple_recep` (`idemple_recep`, `nom_cecep`, `apellido`, `edad_recep`, `tel_recep`, `ident_recep`, `email_recep`) VALUES
+(1, 'admin', 'fio', 25, 9887532, 123456789, '0'),
+(3, 'prueba', 'solo', 29, 9876, 987654321, 'prueba@gmail.com');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `estado_hab`
+--
+
+CREATE TABLE `estado_hab` (
+  `idestado_hab` int(11) NOT NULL,
+  `tipo_estado` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `estado_hab`
+--
+
+INSERT INTO `estado_hab` (`idestado_hab`, `tipo_estado`) VALUES
+(1, 'Reservado'),
+(2, 'En uso'),
+(3, 'Finalizado');
 
 -- --------------------------------------------------------
 
@@ -128,20 +150,31 @@ CREATE TABLE `hospedaje` (
   `fecha_sal` date NOT NULL,
   `cant_person` int(11) NOT NULL,
   `habitacion_idhabitacion` int(11) NOT NULL,
-  `medio_pag_idmedio_pag` int(11) NOT NULL
+  `medio_pag_idmedio_pag` int(11) NOT NULL,
+  `estado_hab_idestado_hab` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `hospedaje`
 --
 
-INSERT INTO `hospedaje` (`idhospedaje`, `fecha_entra`, `fecha_sal`, `cant_person`, `habitacion_idhabitacion`, `medio_pag_idmedio_pag`) VALUES
-(1, '2025-03-25', '2025-03-28', 1, 1, 1),
-(2, '2025-03-26', '2025-03-27', 2, 2, 2),
-(3, '2025-03-25', '2025-03-26', 1, 3, 3),
-(4, '2025-03-25', '2025-03-26', 1, 3, 3),
-(5, '2025-04-03', '2025-04-04', 3, 1, 1),
-(10, '2025-04-03', '2025-04-04', 2, 3, 1);
+INSERT INTO `hospedaje` (`idhospedaje`, `fecha_entra`, `fecha_sal`, `cant_person`, `habitacion_idhabitacion`, `medio_pag_idmedio_pag`, `estado_hab_idestado_hab`) VALUES
+(1, '2025-03-25', '2025-03-28', 1, 1, 1, 3),
+(2, '2025-03-25', '2025-03-26', 2, 3, 2, 3),
+(3, '2025-03-25', '2025-03-26', 1, 3, 3, 3),
+(5, '2025-04-03', '2025-04-05', 3, 3, 1, 3),
+(10, '2025-04-03', '2025-04-05', 2, 1, 1, 3),
+(11, '2025-06-05', '2025-06-10', 2, 1, 1, 1);
+
+--
+-- Disparadores `hospedaje`
+--
+DELIMITER $$
+CREATE TRIGGER `insertar_estado_reservado` BEFORE INSERT ON `hospedaje` FOR EACH ROW BEGIN
+  SET NEW.estado_hab_idestado_hab = 1;
+END
+$$
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -162,11 +195,11 @@ CREATE TABLE `hospedaje_has_cliente` (
 
 INSERT INTO `hospedaje_has_cliente` (`hospedaje_idhospedaje`, `hospedaje_habitacion_idhabitacion`, `hospedaje_medio_pag_idmedio_pag`, `cliente_idcliente`) VALUES
 (1, 1, 1, 1),
-(2, 2, 2, 2),
+(2, 3, 2, 2),
 (3, 3, 3, 3),
-(4, 3, 3, 4),
-(5, 1, 1, 5),
-(10, 3, 1, 10);
+(5, 3, 1, 5),
+(10, 1, 1, 10),
+(11, 1, 1, 11);
 
 -- --------------------------------------------------------
 
@@ -212,6 +245,12 @@ ALTER TABLE `emple_recep`
   ADD PRIMARY KEY (`idemple_recep`);
 
 --
+-- Indices de la tabla `estado_hab`
+--
+ALTER TABLE `estado_hab`
+  ADD PRIMARY KEY (`idestado_hab`);
+
+--
 -- Indices de la tabla `habitacion`
 --
 ALTER TABLE `habitacion`
@@ -223,7 +262,8 @@ ALTER TABLE `habitacion`
 ALTER TABLE `hospedaje`
   ADD PRIMARY KEY (`idhospedaje`,`habitacion_idhabitacion`,`medio_pag_idmedio_pag`),
   ADD KEY `fk_hospedaje_habitacion_idx` (`habitacion_idhabitacion`),
-  ADD KEY `fk_hospedaje_medio_pag1_idx` (`medio_pag_idmedio_pag`);
+  ADD KEY `fk_hospedaje_medio_pag1_idx` (`medio_pag_idmedio_pag`),
+  ADD KEY `fk_hospedaje_estado` (`estado_hab_idestado_hab`);
 
 --
 -- Indices de la tabla `hospedaje_has_cliente`
@@ -247,19 +287,25 @@ ALTER TABLE `medio_pag`
 -- AUTO_INCREMENT de la tabla `cliente`
 --
 ALTER TABLE `cliente`
-  MODIFY `idcliente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `idcliente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT de la tabla `cuenta_recep`
 --
 ALTER TABLE `cuenta_recep`
-  MODIFY `idcuenta_recep` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `idcuenta_recep` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `emple_recep`
 --
 ALTER TABLE `emple_recep`
-  MODIFY `idemple_recep` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `idemple_recep` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT de la tabla `estado_hab`
+--
+ALTER TABLE `estado_hab`
+  MODIFY `idestado_hab` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `habitacion`
@@ -271,7 +317,7 @@ ALTER TABLE `habitacion`
 -- AUTO_INCREMENT de la tabla `hospedaje`
 --
 ALTER TABLE `hospedaje`
-  MODIFY `idhospedaje` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `idhospedaje` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT de la tabla `medio_pag`
@@ -293,6 +339,7 @@ ALTER TABLE `cuenta_recep`
 -- Filtros para la tabla `hospedaje`
 --
 ALTER TABLE `hospedaje`
+  ADD CONSTRAINT `fk_hospedaje_estado` FOREIGN KEY (`estado_hab_idestado_hab`) REFERENCES `estado_hab` (`idestado_hab`) ON DELETE SET NULL ON UPDATE CASCADE,
   ADD CONSTRAINT `fk_hospedaje_habitacion` FOREIGN KEY (`habitacion_idhabitacion`) REFERENCES `habitacion` (`idhabitacion`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_hospedaje_medio_pag1` FOREIGN KEY (`medio_pag_idmedio_pag`) REFERENCES `medio_pag` (`idmedio_pag`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
@@ -301,7 +348,7 @@ ALTER TABLE `hospedaje`
 --
 ALTER TABLE `hospedaje_has_cliente`
   ADD CONSTRAINT `fk_hospedaje_has_cliente_cliente1` FOREIGN KEY (`cliente_idcliente`) REFERENCES `cliente` (`idcliente`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_hospedaje_has_cliente_hospedaje1` FOREIGN KEY (`hospedaje_idhospedaje`,`hospedaje_habitacion_idhabitacion`,`hospedaje_medio_pag_idmedio_pag`) REFERENCES `hospedaje` (`idhospedaje`, `habitacion_idhabitacion`, `medio_pag_idmedio_pag`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_hospedaje_has_cliente_hospedaje1` FOREIGN KEY (`hospedaje_idhospedaje`,`hospedaje_habitacion_idhabitacion`,`hospedaje_medio_pag_idmedio_pag`) REFERENCES `hospedaje` (`idhospedaje`, `habitacion_idhabitacion`, `medio_pag_idmedio_pag`) ON DELETE NO ACTION ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -28,7 +28,7 @@ header("Pragma: no-cache");
     <!-- theme meta -->
     <meta name="theme-name" content="quixlab" />
   
-    <title>Quixlab - Bootstrap Admin Dashboard Template by Themefisher.com</title>
+    <title>Inicio</title>
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="images/favicon.png">
     <!-- Pignose Calender -->
@@ -40,6 +40,9 @@ header("Pragma: no-cache");
     <link href="css_MR/style.css" rel="stylesheet">
       <!-- script de las alertas sweetalert2 -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- Iconos de font awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
 </head>
 
 <body>
@@ -98,10 +101,11 @@ header("Pragma: no-cache");
                     <ul class="clearfix">
             
                         <li class="icons dropdown">
-                            <div class="user-img c-pointer position-relative"   data-toggle="dropdown">
+                            <div class="user-img c-pointer position-relative" data-toggle="dropdown">
                                 <span class="activity active"></span>
-                                <img src="images/user/1.png" height="40" width="40" alt="">
+                                <i class="fas fa-user-circle fa-2x text-dark" style="font-size: 40px;"></i>
                             </div>
+
                             <div class="drop-down dropdown-profile animated fadeIn dropdown-menu">
                                 <div class="dropdown-content-body">
                                     <ul>
@@ -137,7 +141,7 @@ header("Pragma: no-cache");
                 </a>
                 <ul aria-expanded="false">
                     <li><a href="./index.php">Inicio</a></li>
-                    <li><a href="./historial-reservas.html">Historial De Reservas</a></li>
+                    <li><a href="./historial-reservas.php">Historial De Reservas</a></li>
                     <li><a href="./grafica-reservas.php">Gráficas Reservas</a></li>
                 </ul>
             </li>
