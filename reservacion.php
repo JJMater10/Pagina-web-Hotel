@@ -19,7 +19,7 @@ if (isset($_SESSION['reserva_exitosa']) && $_SESSION['reserva_exitosa']) {
     unset($_SESSION['reserva_exitosa']);
 }
 // Obtener habitaciones desde la base de datos
-$sql_habitaciones = "SELECT idhabitacion, nom_hab FROM habitacion";
+$sql_habitaciones = "SELECT idhabitacion, nom_hab FROM habitacion WHERE hab_dispo > 0";
 $result_habitaciones = $conn->query($sql_habitaciones);
 
 // Obtener medios de pago desde la base de datos
