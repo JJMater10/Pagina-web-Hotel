@@ -122,11 +122,11 @@ $result_medios_pago = $conn->query($sql_medios_pago);
             <div class="row">
                 <div class="col-md-6">
                     <label>Fecha de Entrada:</label>
-                    <input type="date" class="controls" name="fecha_entrada" required>
+                    <input type="date" class="controls" name="fecha_entrada" id="fecha_entrada" required>
                 </div>
                 <div class="col-md-6">
                     <label>Fecha de Salida:</label>
-                    <input type="date" class="controls" name="fecha_salida" required>
+                    <input type="date" class="controls" name="fecha_salida" id="fecha_salida" required>
                 </div>
             </div>
 
@@ -201,6 +201,8 @@ $result_medios_pago = $conn->query($sql_medios_pago);
         <!-- Core theme JS-->
         <script src="js/scripts_form.js"></script>
         <script src="js/validacion.js"></script>
+        <script src="js/validacion-fechas.js"></script>
+
         <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
         <!-- * *                               SB Forms JS                               * *-->
         <!-- * * Activate your form at https://startbootstrap.com/solution/contact-forms * *-->

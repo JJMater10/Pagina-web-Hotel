@@ -42,6 +42,9 @@ header("Pragma: no-cache");
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <!-- Iconos de font awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- DataTables CSS -->
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
+
 
 </head>
 
@@ -160,7 +163,7 @@ header("Pragma: no-cache");
 <!-- Aca se colocara lo recaudado en todo el año -->
             <div class="container-fluid mt-3">
                 <div class="row">
-                    <div class="col-lg-3 col-sm-6">
+                    <div class="col-lg-6 col-sm-6">
                         <div class="card gradient-2">
                             <div class="card-body">
                                 <h3 class="card-title text-white">Total Recuadado</h3>
@@ -174,7 +177,7 @@ header("Pragma: no-cache");
                     </div>
                     
 <!-- Aca se colocara la cantidad de reservas hechas -->
-                    <div class="col-lg-3 col-sm-6">
+                    <div class="col-lg-6 col-sm-6">
                         <div class="card gradient-3">
                             <div class="card-body">
                                 <h3 class="card-title text-white">Total reservas</h3>
@@ -188,17 +191,40 @@ header("Pragma: no-cache");
                     </div>
                 </div>
 
+            <!-- Cantidad de habitaciones y habitaciones que hay y porcentaje de cada una -->
+            <div class="col-lg-12">
+                <div class="card card-widget">
+                    <div class="card-body">
+                        
+                        <!-- Bloque centrado -->
+                        <div class="text-center mb-4">
+                            <h5 class="fw-bold">Total habitaciones</h5>
+                            <h2 id="total-habitaciones">0</h2>
+                        </div>
+
+                        <!-- Bloque alineado a la izquierda -->
+                        <p class="fw-bold">Tipo de habitaciones</p>
+                        <div id="habitaciones-tipo" class="mt-3">
+                            <!-- contenido generado por JS -->
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
                 <!-- Aca se pondria la información de las reservas -->
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="card">
                             <div class="card-body">
-                                <h4 class="card-title">Información de reservaciones</h4>
+                                <h4 class="text-center card-title">Información de reservaciones</h4>
                                 <div class="mb-3 d-flex justify-content-start">
-                                    <input type="text" id="buscador-reservas" class="form-control w-25" placeholder="Buscar reservación...">
                                 </div>
                                 <div class="table-responsive"> 
-                                    <table class="table table-bordered table-striped verticle-middle">
+                                     <button id="btnActualizarReservas" class="btn btn-primary mb-3">
+                                    Actualizar Reservas
+                                </button>
+                                    <table id="tablaReservas" class="table table-bordered table-striped verticle-middle">
                                         <thead>
                                             <tr>
                                                 <th scope="col">Usuario</th>
@@ -221,26 +247,7 @@ header("Pragma: no-cache");
                     </div>
                         </div>    
 
-                <!-- Cantidad de habitaciones y habitaciones que hay y porcentaje de cada una -->
-<div class="col-lg-12">
-    <div class="card card-widget">
-        <div class="card-body">
-            
-            <!-- Bloque centrado -->
-            <div class="text-center mb-4">
-                <h5 class="fw-bold">Total habitaciones</h5>
-                <h2 id="total-habitaciones">0</h2>
-            </div>
-
-            <!-- Bloque alineado a la izquierda -->
-            <p class="fw-bold">Tipo de habitaciones</p>
-            <div id="habitaciones-tipo" class="mt-3">
-                <!-- contenido generado por JS -->
-            </div>
-
-        </div>
-    </div>
-</div>
+             
 
 
 
@@ -356,6 +363,9 @@ header("Pragma: no-cache");
     <!-- ChartistJS -->
     <script src="plugins/chartist/js/chartist.min.js"></script>
     <script src="plugins/chartist-plugin-tooltips/js/chartist-plugin-tooltip.min.js"></script>
+
+    <!-- DataTables core -->
+<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
 
     <script src="js_MR/dashboard/dashboard-1.js"></script>
     <script src="js_MR/dashboard-metricas.js"></script>

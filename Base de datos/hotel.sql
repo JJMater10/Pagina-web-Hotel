@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 16-06-2025 a las 01:56:33
+-- Tiempo de generación: 29-06-2025 a las 01:40:11
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -50,7 +50,11 @@ INSERT INTO `cliente` (`idcliente`, `prim_nom_client`, `seg_nom_client`, `prim_a
 (4, 'juan ', 'perez', 'diaz', 'baron', '30', '1255443', '34235523', 'juan@gmail.com'),
 (5, 'pedro', 'jose', 'gutierrez', 'alvaro', '23', '244325', '967384342', 'predro@gmail.com'),
 (10, 'luis', 'ramiro', 'lopez', 'casca', '19', '7698543', '1266548808', 'luis@gmail.com'),
-(11, 'Pablo', 'Juan', 'Torres', 'Diaz', '34', '13675532', '7634233445', 'pablo@gmail.com');
+(11, 'Pablo', 'Juan', 'Torres', 'Diaz', '34', '13675532', '7634233445', 'pablo@gmail.com'),
+(12, 'richard', '', 'rios', '', '34', '67453452', '2345678990', 'rios@gmail.com'),
+(13, 'james', '', 'rodriguez', '', '23', '2378967', '3456789867', 'james@gmail.com'),
+(14, 'luis', '', 'diaz', '', '24', '12456757', '9854535674', 'diaz@gmail.com'),
+(15, 'lionel', '', 'messi', '', '39', '234678977', '4567990231', 'messi@gmail.com');
 
 -- --------------------------------------------------------
 
@@ -70,7 +74,7 @@ CREATE TABLE `cuenta_recep` (
 
 INSERT INTO `cuenta_recep` (`idcuenta_recep`, `clave`, `emple_recep_idemple_recep`) VALUES
 (1, '$2y$10$DA1VekcfJw.2AC5cqSIxbO5bkeArZ1qXxTxaFYwVHTypTVboTVOwS', 1),
-(3, '$2y$10$jUURJLPDztUQaIca7a.kmuL.zR1NmF/u.3NTq7a/ca0dqwT7YX/WC', 3);
+(3, '$2y$10$aC3tyET7lfhFnx1Xj.bQ5uXPSyUAWdgs7k9/lxvJ3HEcbjX/Gn0Ii', 3);
 
 -- --------------------------------------------------------
 
@@ -93,8 +97,8 @@ CREATE TABLE `emple_recep` (
 --
 
 INSERT INTO `emple_recep` (`idemple_recep`, `nom_cecep`, `apellido`, `edad_recep`, `tel_recep`, `ident_recep`, `email_recep`) VALUES
-(1, 'admin', 'fio', 25, 9887532, 123456789, '0'),
-(3, 'prueba', 'solo', 29, 9876, 987654321, 'prueba@gmail.com');
+(1, 'admin', 'heo', 19, 563458776, 123456789, 'admin@gmail.com'),
+(3, 'prueba', 'solo', 19, 675464, 987654321, 'prueba@gmail.com');
 
 -- --------------------------------------------------------
 
@@ -134,7 +138,7 @@ CREATE TABLE `habitacion` (
 --
 
 INSERT INTO `habitacion` (`idhabitacion`, `nom_hab`, `hab_dispo`, `precio_hab`) VALUES
-(1, 'Habitación Estándar', 10, 60000),
+(1, 'Habitación Estándar', 0, 60000),
 (2, 'Suit Junior', 10, 200000),
 (3, 'Suit Presidencial', 10, 550000);
 
@@ -159,12 +163,16 @@ CREATE TABLE `hospedaje` (
 --
 
 INSERT INTO `hospedaje` (`idhospedaje`, `fecha_entra`, `fecha_sal`, `cant_person`, `habitacion_idhabitacion`, `medio_pag_idmedio_pag`, `estado_hab_idestado_hab`) VALUES
-(1, '2025-03-25', '2025-03-28', 1, 1, 1, 3),
-(2, '2025-03-25', '2025-03-26', 2, 3, 2, 3),
-(3, '2025-03-25', '2025-03-26', 1, 3, 3, 3),
-(5, '2025-04-03', '2025-04-05', 3, 3, 1, 3),
-(10, '2025-04-03', '2025-04-05', 2, 1, 1, 3),
-(11, '2025-06-05', '2025-06-10', 2, 1, 1, 1);
+(1, '2025-03-25', '2025-03-28', 1, 1, 1, 2),
+(2, '2025-03-25', '2025-03-26', 2, 1, 2, 2),
+(3, '2025-03-25', '2025-03-26', 1, 1, 3, 2),
+(5, '2025-04-03', '2025-04-05', 3, 1, 1, 2),
+(10, '2025-04-03', '2025-04-05', 2, 1, 1, 2),
+(11, '2025-06-05', '2025-06-10', 2, 1, 1, 2),
+(12, '2025-06-16', '2025-06-18', 1, 1, 1, 2),
+(13, '2025-06-17', '2025-06-17', 2, 1, 2, 2),
+(14, '2025-06-17', '2025-06-18', 4, 1, 2, 2),
+(15, '2025-06-17', '2025-06-19', 2, 1, 2, 2);
 
 --
 -- Disparadores `hospedaje`
@@ -195,11 +203,15 @@ CREATE TABLE `hospedaje_has_cliente` (
 
 INSERT INTO `hospedaje_has_cliente` (`hospedaje_idhospedaje`, `hospedaje_habitacion_idhabitacion`, `hospedaje_medio_pag_idmedio_pag`, `cliente_idcliente`) VALUES
 (1, 1, 1, 1),
-(2, 3, 2, 2),
-(3, 3, 3, 3),
-(5, 3, 1, 5),
+(2, 1, 2, 2),
+(3, 1, 3, 3),
+(5, 1, 1, 5),
 (10, 1, 1, 10),
-(11, 1, 1, 11);
+(11, 1, 1, 11),
+(12, 1, 1, 12),
+(13, 1, 2, 13),
+(14, 1, 2, 14),
+(15, 1, 2, 15);
 
 -- --------------------------------------------------------
 
@@ -287,7 +299,7 @@ ALTER TABLE `medio_pag`
 -- AUTO_INCREMENT de la tabla `cliente`
 --
 ALTER TABLE `cliente`
-  MODIFY `idcliente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `idcliente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT de la tabla `cuenta_recep`
@@ -317,7 +329,7 @@ ALTER TABLE `habitacion`
 -- AUTO_INCREMENT de la tabla `hospedaje`
 --
 ALTER TABLE `hospedaje`
-  MODIFY `idhospedaje` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `idhospedaje` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT de la tabla `medio_pag`

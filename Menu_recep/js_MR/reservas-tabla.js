@@ -60,53 +60,83 @@ function cargarReservas() {
         method: "GET",
         dataType: "json",
         success: function (data) {
-            const cuerpoTabla = $("table.table tbody");
+            const tabla = $('#tablaReservas'); // ✅ Selecciona la tabla una sola vez
+            const cuerpoTabla = tabla.find("tbody");
+
+            // ✅ Destruir si ya existe el DataTable
+            if ( $.fn.DataTable.isDataTable(tabla) ) {
+                tabla.DataTable().clear().destroy();
+            }
+
+            // ✅ Vaciar cuerpo
             cuerpoTabla.empty();
 
+            // ✅ Rellenar filas
             data.forEach(function (reserva) {
                 const fila = `
-<tr>
-    <td>${reserva.nombre}</td>
-    <td>${reserva.identificacion}</td>
-    <td>${reserva.telefono}</td>
-    <td>${reserva.fecha_entra}</td>
-    <td>${reserva.fecha_sal}</td>
-    <td>${reserva.habitacion}</td>
-    <td>${reserva.estado || 'Sin estado'}</td>
-    <td>
-        <span>
-            <a href="#" class="editar-reserva"
-                data-nombre="${reserva.nombre}"
-                data-identificacion="${reserva.identificacion}"
-                data-telefono="${reserva.telefono}"
-                data-entrada="${reserva.fecha_entra}"
-                data-salida="${reserva.fecha_sal}"
-                data-habitacion="${reserva.habitacion}"
-                data-idhabitacion="${reserva.idhabitacion}"
-                data-idestado="${reserva.idestado}" 
-                data-toggle="modal"
-                data-target="#modalEditarReserva"
-                title="Editar">
-                <i class="fa fa-pencil color-muted m-r-5"></i>
-            </a>
+            <tr>
+                <td>${reserva.nombre}</td>
+                <td>${reserva.identificacion}</td>
+                <td>${reserva.telefono}</td>
+                <td>${reserva.fecha_entra}</td>
+                <td>${reserva.fecha_sal}</td>
+                <td>${reserva.habitacion}</td>
+                <td>${reserva.estado || 'Sin estado'}</td>
+                <td>
+                    <span>
+                        <a href="#" class="editar-reserva"
+                            data-nombre="${reserva.nombre}"
+                            data-identificacion="${reserva.identificacion}"
+                            data-telefono="${reserva.telefono}"
+                            data-entrada="${reserva.fecha_entra}"
+                            data-salida="${reserva.fecha_sal}"
+                            data-habitacion="${reserva.habitacion}"
+                            data-idhabitacion="${reserva.idhabitacion}"
+                            data-idestado="${reserva.idestado}" 
+                            data-toggle="modal"
+                            data-target="#modalEditarReserva"
+                            title="Editar">
+                            <i class="fa fa-pencil color-muted m-r-5"></i>
+                        </a>
 
-            <a href="#" class="eliminar-reserva"
-                data-identificacion="${reserva.identificacion}"
-                title="Eliminar">
-                <i class="fa fa-trash color-danger"></i>
-            </a>
-        </span>
-    </td>
-</tr>
+                        <a href="#" class="eliminar-reserva"
+                            data-identificacion="${reserva.identificacion}"
+                            title="Eliminar">
+                            <i class="fa fa-trash color-danger"></i>
+                        </a>
+                    </span>
+                </td>
+            </tr>
                 `;
                 cuerpoTabla.append(fila);
             });
 
-            $('#buscador-reservas').on('keyup', function () {
-                const valor = $(this).val().toLowerCase();
-                cuerpoTabla.find('tr').each(function () {
-                    $(this).toggle($(this).text().toLowerCase().includes(valor));
-                });
+            // ✅ Volver a inicializar DataTable
+            tabla.DataTable({
+                pageLength: 10,
+                lengthMenu: [5, 10, 25, 50, 100],
+                 order: [[3, "desc"]], // ✅ Ordenar por Fecha Llegada descendente
+                language: {
+                    processing:     "Procesando...",
+                    search:         "Buscar:",
+                    lengthMenu:     "Mostrar _MENU_ registros",
+                    info:           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                    infoEmpty:      "Mostrando registros del 0 al 0 de un total de 0 registros",
+                    infoFiltered:   "(filtrado de un total de _MAX_ registros)",
+                    loadingRecords: "Cargando...",
+                    zeroRecords:    "No se encontraron resultados",
+                    emptyTable:     "Ningún dato disponible en esta tabla",
+                    paginate: {
+                        first:      "Primero",
+                        previous:   "Anterior",
+                        next:       "Siguiente",
+                        last:       "Último"
+                    },
+                    aria: {
+                        sortAscending:  ": Activar para ordenar la columna de manera ascendente",
+                        sortDescending: ": Activar para ordenar la columna de manera descendente"
+                    },
+                }
             });
         },
         error: function (err) {
@@ -114,6 +144,7 @@ function cargarReservas() {
         }
     });
 }
+
 
 $(document).on('click', '.editar-reserva', function () {
     $('#edit-nombre').val($(this).data('nombre'));
@@ -295,3 +326,8 @@ function actualizarHabitacionesResumen() {
         }
     });
 }
+
+
+$('#btnActualizarReservas').on('click', function() {
+    cargarReservas();
+});
