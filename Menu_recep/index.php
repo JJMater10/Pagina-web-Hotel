@@ -24,10 +24,8 @@ header("Pragma: no-cache");
     <meta http-equiv="Pragma" content="no-cache" />
     <meta http-equiv="Expires" content="0" />
 
-    
     <!-- theme meta -->
     <meta name="theme-name" content="quixlab" />
-  
     <title>Inicio</title>
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="images/favicon.png">
@@ -43,7 +41,11 @@ header("Pragma: no-cache");
     <!-- Iconos de font awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- DataTables CSS -->
-<link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
+    <!-- alertas de toastr -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
 
 
 </head>
@@ -102,7 +104,23 @@ header("Pragma: no-cache");
                 
                 <div class="header-right">
                     <ul class="clearfix">
-            
+                        <li class="icons dropdown" id="notificaciones-dropdown">
+                            <a href="javascript:void(0)" data-toggle="dropdown">
+                                <i class="mdi mdi-bell-outline"></i>
+                                <span class="badge badge-pill gradient-2" id="cantidad-notificaciones">0</span>
+                            </a>
+                            <div class="drop-down animated fadeIn dropdown-menu dropdown-notfication">
+                                <div class="dropdown-content-heading d-flex justify-content-between">
+                                    <span class="">Nuevas Notificaciones</span>
+                                </div>
+                                <div class="dropdown-content-body">
+                                    <ul id="lista-notificaciones">
+                                        <li><span class="notification-text">Cargando...</span></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </li>
+
                         <li class="icons dropdown">
                             <div class="user-img c-pointer position-relative" data-toggle="dropdown">
                                 <span class="activity active"></span>
@@ -220,10 +238,10 @@ header("Pragma: no-cache");
                                 <h4 class="text-center card-title">Información de reservaciones</h4>
                                 <div class="mb-3 d-flex justify-content-start">
                                 </div>
-                                <div class="table-responsive"> 
-                                     <button id="btnActualizarReservas" class="btn btn-primary mb-3">
+                                <button id="btnActualizarReservas" class="btn btn-primary">
                                     Actualizar Reservas
                                 </button>
+                                <div class="table-responsive"> 
                                     <table id="tablaReservas" class="table table-bordered table-striped verticle-middle">
                                         <thead>
                                             <tr>

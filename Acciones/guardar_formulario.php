@@ -88,6 +88,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
     $stmt->close();
 
+    // ✅ Insertar notificación
+$mensaje = "Nueva reserva realizada por: $prim_nom_client";
+$conn->query("INSERT INTO notificaciones (mensaje) VALUES ('$mensaje')");
+
     // ✅ Descontar 1 unidad de habitación disponible
     $sql_update = "UPDATE habitacion SET hab_dispo = hab_dispo - 1 WHERE idhabitacion = ? AND hab_dispo > 0";
     $stmt = $conn->prepare($sql_update);
