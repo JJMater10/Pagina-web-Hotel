@@ -74,100 +74,74 @@ $result_medios_pago = $conn->query($sql_medios_pago);
         </header>
         <!-- Reservación = Aqui poner el formulario de reservacion -->
         <section id="reserva">
-    <div class="container">
-        <form action="Acciones/guardar_formulario.php" method="POST" class="form-register">
-            <h4>Formulario Registro</h4>
+                <div class="container-fluid"> <!-- Cambiamos a fluid -->
+                <form action="Acciones/guardar_formulario.php" method="POST" class="form-register">
+                        <h4>Formulario Registro</h4>
 
-            <!-- Fila para primer y segundo nombre -->
-            <div class="row">
-                <div class="col-md-6">
-                    <input type="text" name="prim_nom_client" class="controls" placeholder="Primer Nombre" required>
-                </div>
-                <div class="col-md-6">
-                    <input type="text" name="seg_nom_client" class="controls" placeholder="Segundo Nombre">
-                </div>
+                        <div class="row">
+                            <!-- Bloque DATOS HUESPED -->
+                            <div class="col-md-3 bloque-form">
+                                <h5 class="titulo-bloque">Datos Huésped</h5>
+                                <input type="text" name="prim_nom_client" class="controls" placeholder="Primer Nombre" required>
+                                <input type="text" name="seg_nom_client" class="controls" placeholder="Segundo Nombre">
+                                <input type="text" name="prim_apelli_client" class="controls" placeholder="Primer Apellido" required>
+                                <input type="text" name="seg_apelli_client" class="controls" placeholder="Segundo Apellido">
+                                <input type="number" name="edad_client" class="controls" placeholder="Edad" required>
+                                <input type="text" name="iden_client" class="controls" placeholder="Identificación" required>
+                            </div>
+
+                            <!-- Bloque SALIDA - ENTRADA -->
+                            <div class="col-md-3 bloque-form">
+                                <h5 class="titulo-bloque">Entrada / Salida</h5>
+                                <label>Fecha de Entrada:</label>
+                                <input type="date" class="controls" name="fecha_entrada" required>
+                                <label>Fecha de Salida:</label>
+                                <input type="date" class="controls" name="fecha_salida" required>
+                                <label>Cantidad de Personas:</label>
+                                <input type="number" class="controls" name="cant_person" required>
+                            </div>
+
+                            <!-- Bloque CONTACTO -->
+                            <div class="col-md-3 bloque-form">
+                                <h5 class="titulo-bloque">Contacto</h5>
+                                <input type="text" name="tel_client" class="controls" placeholder="Teléfono" pattern="[0-9]{10}" required>
+                                <input type="email" name="email_client" class="controls" placeholder="Correo Electrónico" required>
+                            </div>
+
+                            <!-- Bloque HABITACIÓN / MEDIO DE PAGO -->
+                            <div class="col-md-3 bloque-form">
+                                <h5 class="titulo-bloque">Habitación y Pago</h5>
+                                <label>Selecciona la Habitación:</label>
+                                <select name="habitacion_id" class="controls" required>
+                                    <option value="">Seleccione una habitación</option>
+                                    <?php while ($row = $result_habitaciones->fetch_assoc()): ?>
+                                        <option value="<?php echo $row['idhabitacion']; ?>">
+                                            <?php echo $row['nom_hab']; ?>
+                                        </option>
+                                    <?php endwhile; ?>
+                                </select>
+                                <label>Selecciona Medio de Pago:</label>
+                                <select name="medio_pago" class="controls" required>
+                                    <option value="">Seleccione un método de pago</option>
+                                    <?php while ($row = $result_medios_pago->fetch_assoc()): ?>
+                                        <option value="<?php echo $row['idmedio_pag']; ?>">
+                                            <?php echo $row['tipo_pag']; ?>
+                                        </option>
+                                    <?php endwhile; ?>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Botón de reserva centrado -->
+                        <div class="row mt-4">
+                            <div class="col text-center">
+                                <button type="submit" class="botons">Reservar</button>
+                            </div>
+                        </div>
+                    </form>
+
             </div>
 
-            <!-- Fila para primer y segundo apellido -->
-            <div class="row">
-                <div class="col-md-6">
-                    <input type="text" name="prim_apelli_client" class="controls" placeholder="Primer Apellido" required>
-                </div>
-                <div class="col-md-6">
-                    <input type="text" name="seg_apelli_client" class="controls" placeholder="Segundo Apellido">
-                </div>
-            </div>
-
-            <!-- Fila para edad y identificación -->
-            <div class="row">
-                <div class="col-md-6">
-                    <input type="number" name="edad_client" class="controls" placeholder="Edad" required>
-                </div>
-                <div class="col-md-6">
-                    <input type="text" name="iden_client" class="controls" placeholder="Identificación" required>
-                </div>
-            </div>
-
-            <!-- Fila para teléfono y correo -->
-            <div class="row">
-                <div class="col-md-6">
-                    <input type="text" name="tel_client" class="controls" placeholder="Teléfono" pattern="[0-9]{10}" required>
-                </div>
-                <div class="col-md-6">
-                    <input type="email" name="email_client" class="controls" placeholder="Correo Electrónico" required>
-                </div>
-            </div>
-
-            <!-- Fila para fechas -->
-            <div class="row">
-                <div class="col-md-6">
-                    <label>Fecha de Entrada:</label>
-                    <input type="date" class="controls" name="fecha_entrada" id="fecha_entrada" required>
-                </div>
-                <div class="col-md-6">
-                    <label>Fecha de Salida:</label>
-                    <input type="date" class="controls" name="fecha_salida" id="fecha_salida" required>
-                </div>
-            </div>
-
-            <!-- Fila para cantidad de personas -->
-            <div class="row">
-                <div class="col-md-6">
-                    <label>Cantidad de Personas:</label>
-                    <input type="number" class="controls" name="cant_person" pattern="[0-9]{10}" required>
-                </div>
-            </div>
-
-            <!-- Fila para seleccionar habitación y medio de pago -->
-            <div class="row">
-                <div class="col-md-6">
-                    <label>Selecciona la Habitación:</label>
-                    <select name="habitacion_id" class="controls" required>
-                        <option value="">Seleccione una habitación</option>
-                        <?php while ($row = $result_habitaciones->fetch_assoc()): ?>
-                            <option value="<?php echo $row['idhabitacion']; ?>">
-                                <?php echo $row['nom_hab']; ?>
-                            </option>
-                        <?php endwhile; ?>
-                    </select>
-                </div>
-                <div class="col-md-6">
-                    <label>Selecciona Medio de Pago:</label>
-                    <select name="medio_pago" class="controls" required>
-                        <option value="">Seleccione un método de pago</option>
-                        <?php while ($row = $result_medios_pago->fetch_assoc()): ?>
-                            <option value="<?php echo $row['idmedio_pag']; ?>">
-                                <?php echo $row['tipo_pag']; ?>
-                            </option>
-                        <?php endwhile; ?>
-                    </select>
-                </div>
-            </div>
-
-            <!-- Botón de reserva -->
-            <button type="submit" class="botons">Reservar</button>
-        </form>
-    </div>
 </section>
         <!-- Contact-->
         <section class="page-section" id="contact">

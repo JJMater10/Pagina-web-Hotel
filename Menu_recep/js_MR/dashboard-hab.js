@@ -9,7 +9,6 @@ function cargarResumenHabitaciones() {
             const contenedor = $('#habitaciones-tipo');
             contenedor.empty();
 
-            // Asignar colores fijos por tipo
             const colores = {
                 'Habitación Estándar': 'bg-primary',
                 'Suit Junior': 'bg-success',
@@ -20,7 +19,7 @@ function cargarResumenHabitaciones() {
                 const nombre = hab.nombre;
                 const disponibles = hab.disponibles;
                 const porcentaje = hab.porcentaje.toFixed(0);
-                const claseColor = colores[nombre] || 'bg-secondary'; // fallback
+                const claseColor = colores[nombre] || 'bg-secondary';
 
                 const bloque = `
                     <div class="mt-4">
@@ -42,5 +41,8 @@ function cargarResumenHabitaciones() {
     });
 }
 
-// ⚠️ Llama esta función al cargar el dashboard inicialmente
+// ✅ Llamar al cargar
 cargarResumenHabitaciones();
+
+// ✅ Refrescar cada 10 segundos
+setInterval(cargarResumenHabitaciones, 10000);

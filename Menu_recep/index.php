@@ -43,8 +43,7 @@ header("Pragma: no-cache");
     <!-- DataTables CSS -->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
     <!-- alertas de toastr -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet"/>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <link href="./plugins/toastr/css/toastr.min.css" rel="stylesheet">
 
 
 
@@ -104,23 +103,22 @@ header("Pragma: no-cache");
                 
                 <div class="header-right">
                     <ul class="clearfix">
-                        <li class="icons dropdown" id="notificaciones-dropdown">
+                        <li class="icons dropdown">
                             <a href="javascript:void(0)" data-toggle="dropdown">
                                 <i class="mdi mdi-bell-outline"></i>
                                 <span class="badge badge-pill gradient-2" id="cantidad-notificaciones">0</span>
                             </a>
                             <div class="drop-down animated fadeIn dropdown-menu dropdown-notfication">
                                 <div class="dropdown-content-heading d-flex justify-content-between">
-                                    <span class="">Nuevas Notificaciones</span>
+                                <span class="">Nuevas Notificaciones</span>
                                 </div>
                                 <div class="dropdown-content-body">
-                                    <ul id="lista-notificaciones">
-                                        <li><span class="notification-text">Cargando...</span></li>
-                                    </ul>
+                                <ul id="lista-notificaciones">
+                                    <li><span class="notification-text">Cargando...</span></li>
+                                </ul>
                                 </div>
                             </div>
                         </li>
-
                         <li class="icons dropdown">
                             <div class="user-img c-pointer position-relative" data-toggle="dropdown">
                                 <span class="activity active"></span>
@@ -385,18 +383,26 @@ header("Pragma: no-cache");
     <!-- DataTables core -->
 <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
 
+
+    <!-- Toastr -->
+    <script src="./plugins/toastr/js/toastr.min.js"></script>
+    <script src="./plugins/toastr/js/toastr.init.js"></script>
+
     <script src="js_MR/dashboard/dashboard-1.js"></script>
     <script src="js_MR/dashboard-metricas.js"></script>
     <script src="js_MR/reservas-tabla.js"></script>
     <script src="js_MR/dashboard-hab.js"></script>
-   
+    <script src="js_MR/notificaciones.js"></script>
+
     <!-- Script para evitar que el usuario vuelva a la página anterior -->
     <script>
     window.history.forward();
     window.onunload = function () {};
 </script>>
 
-    
+    <script>
+    toastr.info("Prueba de Toastr desde index.php", "Test Notificación");
+</script>
 </body>
 
 </html>

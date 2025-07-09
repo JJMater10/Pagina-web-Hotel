@@ -89,7 +89,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt->close();
 
     // ✅ Insertar notificación
-$mensaje = "Nueva reserva realizada por: $prim_nom_client";
+$mensaje = "Nueva reserva realizada por: $prim_nom_client $prim_apelli_client";
 $conn->query("INSERT INTO notificaciones (mensaje) VALUES ('$mensaje')");
 
     // ✅ Descontar 1 unidad de habitación disponible
