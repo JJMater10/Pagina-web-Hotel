@@ -1,0 +1,48 @@
+/* Contenedor del modal */
+.modal-editar-contenido {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 20px;
+}
+
+/* Cada bloque */
+.bloque-editar {
+    flex: 1;
+    min-width: 200px;
+}
+
+/* Título de cada bloque */
+.bloque-editar h5 {
+    font-size: 16px;
+    font-weight: bold;
+    color: #fff;
+    background-color: #3498db;
+    padding: 5px;
+    border-radius: 4px;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+/* Inputs del modal */
+.bloque-editar input,
+.bloque-editar select {
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+/* Etiquetas */
+.bloque-editar label {
+    font-weight: bold;
+    font-size: 13px;
+}
+
+/* Botones del footer */
+.modal-footer .btn {
+    min-width: 120px;
+}

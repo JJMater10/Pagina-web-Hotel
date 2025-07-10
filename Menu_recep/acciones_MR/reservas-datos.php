@@ -2,15 +2,21 @@
 include('../../Conexión_BD/conexion.php');
 
 $sql = "SELECT 
-            c.prim_nom_client AS nombre,
+            c.prim_nom_client AS prim_nom,
+            c.seg_nom_client AS seg_nom,
+            c.prim_apelli_client AS prim_ape,
+            c.seg_apelli_client AS seg_ape,
+            c.edad_client AS edad,
+            c.email_client AS correo,
             c.iden_client AS identificacion,
             c.tel_client AS telefono,
             h.fecha_entra,
             h.fecha_sal,
+            h.cant_person AS cantidad,
             ha.nom_hab AS habitacion,
+            ha.idhabitacion,
             eh.tipo_estado AS estado,
-            eh.idestado_hab AS idestado, -- ← IMPORTANTE: incluir idestado
-            ha.idhabitacion
+            eh.idestado_hab AS idestado
         FROM hospedaje h
         INNER JOIN hospedaje_has_cliente hc ON 
             h.idhospedaje = hc.hospedaje_idhospedaje 

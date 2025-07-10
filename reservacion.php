@@ -1,32 +1,6 @@
-
 <?php
-session_start(); // Iniciar la sesión para verificar alertas
-require_once 'Conexión_BD/conexion.php'; // Incluir la conexión a la base de datos
-
-// Verificar si hay una reserva exitosa y mostrar la alerta
-if (isset($_SESSION['reserva_exitosa']) && $_SESSION['reserva_exitosa']) {
-    echo "<script>
-        document.addEventListener('DOMContentLoaded', function() {
-            Swal.fire({
-                title: '¡Reserva Exitosa!',
-                text: 'Su reservación ha sido registrada con éxito.',
-                icon: 'success'
-            });
-        });
-    </script>";
-
-    // Eliminar la variable de sesión para que no se repita la alerta al recargar
-    unset($_SESSION['reserva_exitosa']);
-}
-// Obtener habitaciones desde la base de datos
-$sql_habitaciones = "SELECT idhabitacion, nom_hab FROM habitacion WHERE hab_dispo > 0";
-$result_habitaciones = $conn->query($sql_habitaciones);
-
-// Obtener medios de pago desde la base de datos
-$sql_medios_pago = "SELECT idmedio_pag, tipo_pag FROM medio_pag";
-$result_medios_pago = $conn->query($sql_medios_pago);
+include 'Acciones/cargar_datos_reservacion.php';
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -82,36 +56,44 @@ $result_medios_pago = $conn->query($sql_medios_pago);
                             <!-- Bloque DATOS HUESPED -->
                             <div class="col-md-3 bloque-form">
                                 <h5 class="titulo-bloque">Datos Huésped</h5>
-                                <input type="text" name="prim_nom_client" class="controls" placeholder="Primer Nombre" required>
-                                <input type="text" name="seg_nom_client" class="controls" placeholder="Segundo Nombre">
-                                <input type="text" name="prim_apelli_client" class="controls" placeholder="Primer Apellido" required>
-                                <input type="text" name="seg_apelli_client" class="controls" placeholder="Segundo Apellido">
-                                <input type="number" name="edad_client" class="controls" placeholder="Edad" required>
-                                <input type="text" name="iden_client" class="controls" placeholder="Identificación" required>
+                                <label>* Primer Nombre:</label>
+                                <input type="text" name="prim_nom_client" class="controls" placeholder="Digite su primer nombre" required>
+                                <label>Segundo Nombre:</label>
+                                <input type="text" name="seg_nom_client" class="controls" placeholder="Digite su segundo nombre">
+                                <label>* Primer Apellido:</label>
+                                <input type="text" name="prim_apelli_client" class="controls" placeholder="Digite su primer apellido" required>
+                                <label>Segundo Apellido:</label>
+                                <input type="text" name="seg_apelli_client" class="controls" placeholder="Digite su segundo apellido">
+                                <label>* Edad:</label>
+                                <input type="number" name="edad_client" class="controls" placeholder="Digite su edad" required>
                             </div>
 
                             <!-- Bloque SALIDA - ENTRADA -->
                             <div class="col-md-3 bloque-form">
                                 <h5 class="titulo-bloque">Entrada / Salida</h5>
-                                <label>Fecha de Entrada:</label>
-                                <input type="date" class="controls" name="fecha_entrada" required>
-                                <label>Fecha de Salida:</label>
-                                <input type="date" class="controls" name="fecha_salida" required>
-                                <label>Cantidad de Personas:</label>
+                                <label>* Fecha de Entrada:</label>
+                                <input type="date" class="controls" name="fecha_entrada" id="fecha_entrada" required>
+                                <label>* Fecha de Salida:</label>
+                                <input type="date" class="controls" name="fecha_salida" id="fecha_salida" required>
+                                <label>* Cantidad de Personas:</label>
                                 <input type="number" class="controls" name="cant_person" required>
                             </div>
 
                             <!-- Bloque CONTACTO -->
                             <div class="col-md-3 bloque-form">
                                 <h5 class="titulo-bloque">Contacto</h5>
-                                <input type="text" name="tel_client" class="controls" placeholder="Teléfono" pattern="[0-9]{10}" required>
-                                <input type="email" name="email_client" class="controls" placeholder="Correo Electrónico" required>
+                                <label>* Identificación:</label>
+                                <input type="text" name="iden_client" class="controls" placeholder="Digite su identificación" required>
+                                <label>* Teléfono:</label>
+                                <input type="text" name="tel_client" class="controls" placeholder="Digite su teléfono" pattern="[0-9]{10}" required>
+                                <label>* Correo Electrónico:</label>
+                                <input type="email" name="email_client" class="controls" placeholder="Digite su correo electrónico" required>
                             </div>
 
                             <!-- Bloque HABITACIÓN / MEDIO DE PAGO -->
                             <div class="col-md-3 bloque-form">
                                 <h5 class="titulo-bloque">Habitación y Pago</h5>
-                                <label>Selecciona la Habitación:</label>
+                                <label>* Selecciona la Habitación:</label>
                                 <select name="habitacion_id" class="controls" required>
                                     <option value="">Seleccione una habitación</option>
                                     <?php while ($row = $result_habitaciones->fetch_assoc()): ?>
@@ -120,7 +102,7 @@ $result_medios_pago = $conn->query($sql_medios_pago);
                                         </option>
                                     <?php endwhile; ?>
                                 </select>
-                                <label>Selecciona Medio de Pago:</label>
+                                <label>* Selecciona Medio de Pago:</label>
                                 <select name="medio_pago" class="controls" required>
                                     <option value="">Seleccione un método de pago</option>
                                     <?php while ($row = $result_medios_pago->fetch_assoc()): ?>
@@ -132,6 +114,7 @@ $result_medios_pago = $conn->query($sql_medios_pago);
                             </div>
                         </div>
 
+                        <label>Las casillas marcadas con un asterisco (*) son obligatorias.</label>
                         <!-- Botón de reserva centrado -->
                         <div class="row mt-4">
                             <div class="col text-center">

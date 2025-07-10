@@ -36,6 +36,8 @@ header("Pragma: no-cache");
     <link rel="stylesheet" href="plugins/chartist-plugin-tooltips/css/chartist-plugin-tooltip.css">
     <!-- Custom Stylesheet -->
     <link href="css_MR/style.css" rel="stylesheet">
+    <!-- Custom Stylesheet para el modal de editar -->
+    <link href="css_MR/modal-editar.css" rel="stylesheet" />
       <!-- script de las alertas sweetalert2 -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <!-- Iconos de font awesome -->
@@ -243,7 +245,8 @@ header("Pragma: no-cache");
                                     <table id="tablaReservas" class="table table-bordered table-striped verticle-middle">
                                         <thead>
                                             <tr>
-                                                <th scope="col">Usuario</th>
+                                                <th scope="col">Primer Nombre</th>
+                                                <th scope="col">Primer Apellido</th>
                                                 <th scope="col">Identificación</th>
                                                 <th scope="col">Teléfono</th>
                                                 <th scope="col">Fecha Llegada</th>
@@ -269,57 +272,71 @@ header("Pragma: no-cache");
 
 <!-- Modal Editar Reservación -->
             <div class="modal fade" id="modalEditarReserva" tabindex="-1" role="dialog" aria-labelledby="modalEditarLabel" aria-hidden="true">
-                <div class="modal-dialog modal-lg" role="document">
-                    <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Editar Reservación</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
-                        <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <form id="formEditarReserva">
-                        <div class="form-group">
-                            <label for="edit-nombre">Usuario</label>
-                            <input type="text" class="form-control" id="edit-nombre" name="nombre" readonly>
+                    <div class="modal-dialog modal-xl" role="document">
+                        <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Editar Reservación</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
+                            <span aria-hidden="true">&times;</span>
+                            </button>
                         </div>
-                        <div class="form-group">
-                            <label for="edit-ident">Identificación</label>
-                            <input type="text" class="form-control" id="edit-ident" name="identificacion" readonly>
+                        <div class="modal-body modal-editar-contenido">
+                            
+                            <!-- Bloque Datos Huésped -->
+                            <div class="bloque-editar">
+                            <h5>Datos Huésped</h5>
+                            <label>Primer Nombre:</label>
+                            <input type="text" id="edit-prim-nombre" readonly>
+                            <label>Segundo Nombre:</label>
+                            <input type="text" id="edit-seg-nombre" readonly>
+                            <label>Primer Apellido:</label>
+                            <input type="text" id="edit-prim-apellido" readonly>
+                            <label>Segundo Apellido:</label>
+                            <input type="text" id="edit-seg-apellido" readonly>
+                            <label>Edad:</label>
+                            <input type="text" id="edit-edad" readonly>
+                            </div>
+
+                            <!-- Bloque Contacto -->
+                            <div class="bloque-editar">
+                            <h5>Contacto</h5>
+                            <label>Identificación:</label>
+                            <input type="text" id="edit-identificacion" readonly>
+                            <label>Teléfono:</label>
+                            <input type="text" id="edit-telefono">
+                            <label>Correo:</label>
+                            <input type="email" id="edit-correo" readonly>
+                            </div>
+
+                            <!-- Bloque Fechas -->
+                            <div class="bloque-editar">
+                            <h5>Fechas</h5>
+                            <label>Fecha Llegada:</label>
+                            <input type="date" id="edit-fecha-entrada">
+                            <label>Fecha Salida:</label>
+                            <input type="date" id="edit-fecha-salida">
+                            <label>Cantidad Personas:</label>
+                            <input type="number" id="edit-cantidad" readonly>
+                            </div>
+
+                            <!-- Bloque Habitación y Estado -->
+                            <div class="bloque-editar">
+                            <h5>Habitación y Estado</h5>
+                            <label>Habitación:</label>
+                            <select id="edit-habitacion"></select>
+                            <label>Estado de Reserva:</label>
+                            <select id="edit-estado"></select>
+                            </div>
+                            
                         </div>
-                        <div class="form-group">
-                            <label for="edit-tel">Teléfono</label>
-                            <input type="text" class="form-control" id="edit-tel" name="telefono">
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                            <button type="button" class="btn btn-primary" id="guardarCambios">Guardar Cambios</button>
                         </div>
-                        <div class="form-group">
-                            <label for="edit-entrada">Fecha Llegada</label>
-                            <input type="date" class="form-control" id="edit-entrada" name="fecha_entra">
                         </div>
-                        <div class="form-group">
-                            <label for="edit-salida">Fecha Salida</label>
-                            <input type="date" class="form-control" id="edit-salida" name="fecha_sal">
-                        </div>
-                        <div class="form-group">
-                            <label for="edit-habitacion">Habitación</label>
-                            <select class="form-control" id="edit-habitacion" name="habitacion">
-                    <!-- Las opciones se llenarán con JS -->
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="edit-estado">Estado</label>
-                            <select class="form-control" id="edit-estado" name="estado">
-                                <!-- Se llena dinámicamente con JS -->
-                            </select>
-                        </div>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                        <button type="button" class="btn btn-primary" id="guardarCambios">Guardar Cambios</button>
-                    </div>
                     </div>
                 </div>
-            </div>
+
 
 
 

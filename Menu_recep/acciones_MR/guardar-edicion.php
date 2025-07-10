@@ -3,8 +3,16 @@ error_reporting(E_ALL);
 ini_set('display_errors', 1);
 include('../../Conexión_BD/conexion.php');
 
+// Capturar datos del formulario
 $ident = $_POST['identificacion'];
+$prim_nom = $_POST['prim_nom'];
+$seg_nom = $_POST['seg_nom'];
+$prim_ape = $_POST['prim_ape'];
+$seg_ape = $_POST['seg_ape'];
+$edad = $_POST['edad'];
 $tel = $_POST['telefono'];
+$correo = $_POST['correo'];
+$cantidad = $_POST['cantidad'];
 $entrada = $_POST['fecha_entra'];
 $salida = $_POST['fecha_sal'];
 $idhab_nueva = $_POST['habitacion'];
@@ -71,12 +79,35 @@ $sqlUpdate = "
         h.fecha_sal = ?, 
         h.habitacion_idhabitacion = ?, 
         h.estado_hab_idestado_hab = ?,
-        c.tel_client = ?
+        h.cant_person = ?,
+        c.prim_nom_client = ?,
+        c.seg_nom_client = ?,
+        c.prim_apelli_client = ?,
+        c.seg_apelli_client = ?,
+        c.edad_client = ?,
+        c.tel_client = ?,
+        c.email_client = ?
     WHERE h.idhospedaje = ?
       AND h.medio_pag_idmedio_pag = ?
 ";
 $stmtUpdate = $conn->prepare($sqlUpdate);
-$stmtUpdate->bind_param("ssiiiii", $entrada, $salida, $idhab_nueva, $estado_nuevo, $tel, $idhospedaje, $medio_pago);
+$stmtUpdate->bind_param(
+    "ssiiissssissii",
+    $entrada,
+    $salida,
+    $idhab_nueva,
+    $estado_nuevo,
+    $cantidad,
+    $prim_nom,
+    $seg_nom,
+    $prim_ape,
+    $seg_ape,
+    $edad,
+    $tel,
+    $correo,
+    $idhospedaje,
+    $medio_pago
+);
 
 if (!$stmtUpdate->execute()) {
     echo "error al actualizar: " . $stmtUpdate->error;

@@ -4,13 +4,14 @@ $(document).ready(function () {
     // Guardar cambios del modal
     $('#guardarCambios').on('click', function () {
         const datos = {
-            identificacion: $('#edit-ident').val(),
-            telefono: $('#edit-tel').val(),
-            fecha_entra: $('#edit-entrada').val(),
-            fecha_sal: $('#edit-salida').val(),
-            habitacion: $('#edit-habitacion').val(),
-            estado: $('#edit-estado').val()
-        };
+                identificacion: $('#edit-identificacion').val(),
+                telefono: $('#edit-telefono').val(),
+                fecha_entra: $('#edit-fecha-entrada').val(),
+                fecha_sal: $('#edit-fecha-salida').val(),
+                cantidad: $('#edit-cantidad').val(),
+                habitacion: $('#edit-habitacion').val(),
+                estado: $('#edit-estado').val()
+            };
 
         $.ajax({
             url: "acciones_MR/guardar-edicion.php",
@@ -73,9 +74,10 @@ function cargarReservas() {
 
             // Rellenar filas
             data.forEach(function (reserva) {
-                const fila = `
+         const fila = `
                 <tr>
-                    <td>${reserva.nombre}</td>
+                    <td>${reserva.prim_nom}</td>
+                    <td>${reserva.prim_ape}</td>
                     <td>${reserva.identificacion}</td>
                     <td>${reserva.telefono}</td>
                     <td>${reserva.fecha_entra}</td>
@@ -85,11 +87,17 @@ function cargarReservas() {
                     <td>
                         <span>
                             <a href="#" class="editar-reserva"
-                                data-nombre="${reserva.nombre}"
+                                data-prim-nombre="${reserva.prim_nom}"
+                                data-seg-nombre="${reserva.seg_nom}"
+                                data-prim-apellido="${reserva.prim_ape}"
+                                data-seg-apellido="${reserva.seg_ape}"
+                                data-edad="${reserva.edad}"
                                 data-identificacion="${reserva.identificacion}"
                                 data-telefono="${reserva.telefono}"
+                                data-correo="${reserva.correo}"
                                 data-entrada="${reserva.fecha_entra}"
                                 data-salida="${reserva.fecha_sal}"
+                                data-cantidad="${reserva.cantidad}"
                                 data-habitacion="${reserva.habitacion}"
                                 data-idhabitacion="${reserva.idhabitacion}"
                                 data-idestado="${reserva.idestado}"
@@ -106,7 +114,8 @@ function cargarReservas() {
                             </a>
                         </span>
                     </td>
-                </tr>`;
+                </tr>
+                `;
                 cuerpoTabla.append(fila);
             });
 
@@ -146,17 +155,20 @@ function cargarReservas() {
 
 
 $(document).on('click', '.editar-reserva', function () {
-    $('#edit-nombre').val($(this).data('nombre'));
-    $('#edit-ident').val($(this).data('identificacion'));
-    $('#edit-tel').val($(this).data('telefono'));
-    $('#edit-entrada').val($(this).data('entrada'));
-    $('#edit-salida').val($(this).data('salida'));
+    $('#edit-prim-nombre').val($(this).data('prim-nombre'));
+    $('#edit-seg-nombre').val($(this).data('seg-nombre'));
+    $('#edit-prim-apellido').val($(this).data('prim-apellido'));
+    $('#edit-seg-apellido').val($(this).data('seg-apellido'));
+    $('#edit-edad').val($(this).data('edad'));
+    $('#edit-identificacion').val($(this).data('identificacion'));
+    $('#edit-telefono').val($(this).data('telefono'));
+    $('#edit-correo').val($(this).data('correo'));
+    $('#edit-fecha-entrada').val($(this).data('entrada'));
+    $('#edit-fecha-salida').val($(this).data('salida'));
+    $('#edit-cantidad').val($(this).data('cantidad'));
 
-    const idHabitacion = $(this).data('idhabitacion');
-    const idEstado = $(this).data('idestado');
-
-    cargarHabitaciones(idHabitacion);
-    cargarEstados(idEstado);
+    cargarHabitaciones($(this).data('idhabitacion'));
+    cargarEstados($(this).data('idestado'));
 });
 
 function cargarHabitaciones(habitacionSeleccionada = null) {
