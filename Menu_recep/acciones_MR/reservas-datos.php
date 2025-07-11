@@ -17,7 +17,7 @@ $sql = "SELECT
             ha.idhabitacion,
             eh.tipo_estado AS estado,
             eh.idestado_hab AS idestado
-        FROM hospedaje h
+        FROM hospedaje h   
         INNER JOIN hospedaje_has_cliente hc ON 
             h.idhospedaje = hc.hospedaje_idhospedaje 
             AND h.habitacion_idhabitacion = hc.hospedaje_habitacion_idhabitacion

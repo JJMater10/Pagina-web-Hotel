@@ -6,8 +6,21 @@ ini_set('display_errors', 1);
 // Conexión a BD
 include('../../Conexión_BD/conexion.php');
 
-// Consulta para obtener habitaciones
-$sql = "SELECT idhabitacion, nom_hab FROM habitacion";
+// Verificar si se pasa el id de la habitación actual (para edición)
+$idActual = isset($_GET['idactual']) ? intval($_GET['idactual']) : 0;
+
+// Consulta con filtro
+$sql = "
+    SELECT idhabitacion, nom_hab, hab_dispo 
+    FROM habitacion
+    WHERE hab_dispo > 0
+";
+
+if ($idActual > 0) {
+    // Si viene el idactual, se agrega para incluir la habitación actual aunque tenga 0 disponibles
+    $sql .= " OR idhabitacion = $idActual";
+}
+
 $result = $conn->query($sql);
 
 // Almacena habitaciones en array
@@ -17,7 +30,7 @@ while ($row = $result->fetch_assoc()) {
 }
 
 // Devuelve datos como JSON
-echo json_encode($habitaciones);
+echo json_encode($habitaciones, JSON_UNESCAPED_UNICODE);
 
 // Cierra conexión
 $conn->close();

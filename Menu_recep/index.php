@@ -272,7 +272,7 @@ header("Pragma: no-cache");
 
 <!-- Modal Editar Reservación -->
             <div class="modal fade" id="modalEditarReserva" tabindex="-1" role="dialog" aria-labelledby="modalEditarLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-xl" role="document">
+                    <div class="modal-dialog modal-xl modal-xl-ancho-personalizado" role="document">
                         <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title">Editar Reservación</h5>
@@ -286,15 +286,15 @@ header("Pragma: no-cache");
                             <div class="bloque-editar">
                             <h5>Datos Huésped</h5>
                             <label>Primer Nombre:</label>
-                            <input type="text" id="edit-prim-nombre" readonly>
+                            <input type="text" id="edit-prim-nombre" >
                             <label>Segundo Nombre:</label>
-                            <input type="text" id="edit-seg-nombre" readonly>
+                            <input type="text" id="edit-seg-nombre" >
                             <label>Primer Apellido:</label>
-                            <input type="text" id="edit-prim-apellido" readonly>
+                            <input type="text" id="edit-prim-apellido" >
                             <label>Segundo Apellido:</label>
-                            <input type="text" id="edit-seg-apellido" readonly>
+                            <input type="text" id="edit-seg-apellido" >
                             <label>Edad:</label>
-                            <input type="text" id="edit-edad" readonly>
+                            <input type="text" id="edit-edad" >
                             </div>
 
                             <!-- Bloque Contacto -->
@@ -305,18 +305,18 @@ header("Pragma: no-cache");
                             <label>Teléfono:</label>
                             <input type="text" id="edit-telefono">
                             <label>Correo:</label>
-                            <input type="email" id="edit-correo" readonly>
+                            <input type="email" id="edit-correo" >
                             </div>
 
                             <!-- Bloque Fechas -->
                             <div class="bloque-editar">
                             <h5>Fechas</h5>
                             <label>Fecha Llegada:</label>
-                            <input type="date" id="edit-fecha-entrada">
+                            <input type="date" id="edit-fecha-entrada" readonly>
                             <label>Fecha Salida:</label>
                             <input type="date" id="edit-fecha-salida">
                             <label>Cantidad Personas:</label>
-                            <input type="number" id="edit-cantidad" readonly>
+                            <input type="number" id="edit-cantidad" >
                             </div>
 
                             <!-- Bloque Habitación y Estado -->

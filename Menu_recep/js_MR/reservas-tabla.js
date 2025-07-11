@@ -8,9 +8,15 @@ $(document).ready(function () {
                 telefono: $('#edit-telefono').val(),
                 fecha_entra: $('#edit-fecha-entrada').val(),
                 fecha_sal: $('#edit-fecha-salida').val(),
-                cantidad: $('#edit-cantidad').val(),
                 habitacion: $('#edit-habitacion').val(),
-                estado: $('#edit-estado').val()
+                estado: $('#edit-estado').val(),
+                cantidad: $('#edit-cantidad').val(),
+                prim_nom: $('#edit-prim-nombre').val(),
+                seg_nom: $('#edit-seg-nombre').val(),
+                prim_ape: $('#edit-prim-apellido').val(),
+                seg_ape: $('#edit-seg-apellido').val(),
+                edad: $('#edit-edad').val(),
+                correo: $('#edit-correo').val()
             };
 
         $.ajax({
@@ -123,7 +129,7 @@ function cargarReservas() {
             tabla.DataTable({
                 pageLength: 10,
                 lengthMenu: [5, 10, 25, 50, 100],
-                order: [[3, "desc"]],
+                order: [[4, "desc"]],
                 language: {
                     processing: "Procesando...",
                     search: "Buscar:",
@@ -175,6 +181,7 @@ function cargarHabitaciones(habitacionSeleccionada = null) {
     $.ajax({
         url: "acciones_MR/listar-habitaciones.php",
         method: "GET",
+        data: { idactual: habitacionSeleccionada },
         dataType: "json",
         success: function (data) {
             const select = $('#edit-habitacion');
@@ -182,7 +189,7 @@ function cargarHabitaciones(habitacionSeleccionada = null) {
 
             data.forEach(function (hab) {
                 const selected = (habitacionSeleccionada == hab.idhabitacion) ? 'selected' : '';
-                select.append(`<option value="${hab.idhabitacion}" ${selected}>${hab.nom_hab}</option>`);
+                select.append(`<option value="${hab.idhabitacion}" ${selected}>${hab.nom_hab} (Disponibles: ${hab.hab_dispo})</option>`);
             });
         },
         error: function (err) {
