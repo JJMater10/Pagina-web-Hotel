@@ -3,7 +3,9 @@ session_start();
 require_once __DIR__ . '/../Conexión_BD/conexion.php'; // Asegúrate de la ruta correcta
 
 // Verificar si hay una reserva exitosa
+$reservaExitosa = false;
 if (isset($_SESSION['reserva_exitosa']) && $_SESSION['reserva_exitosa']) {
+    $reservaExitosa = true;
     echo "<script>
     document.addEventListener('DOMContentLoaded', function() {
         Swal.fire({
@@ -25,8 +27,8 @@ $hayHabitaciones = ($result_habitaciones->num_rows > 0);
 $sql_medios_pago = "SELECT idmedio_pag, tipo_pag FROM medio_pag";
 $result_medios_pago = $conn->query($sql_medios_pago);
 
-// Si NO hay habitaciones, mostrar alerta y redirigir
-if (!$hayHabitaciones) {
+// Si NO hay habitaciones y NO acabas de reservar, mostrar alerta y redirigir
+if (!$hayHabitaciones && !$reservaExitosa) {
     echo "<script>
     document.addEventListener('DOMContentLoaded', function() {
         Swal.fire({

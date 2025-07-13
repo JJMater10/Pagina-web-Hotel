@@ -49,7 +49,7 @@ include 'Acciones/cargar_datos_reservacion.php';
         <!-- Reservación = Aqui poner el formulario de reservacion -->
         <section id="reserva">
                 <div class="container-fluid"> <!-- Cambiamos a fluid -->
-                <form action="Acciones/guardar_formulario.php" method="POST" class="form-register">
+                    <form method="POST" class="form-register" id="form-reserva">
                         <h4>Formulario Registro</h4>
 
                         <div class="row">
@@ -153,12 +153,15 @@ include 'Acciones/cargar_datos_reservacion.php';
             </div>
         </footer>
         <!-- Portfolio Modals-->
+         <!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <!-- Bootstrap core JS-->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
         <!-- Core theme JS-->
         <script src="js/scripts_form.js"></script>
-        <script src="js/validacion.js"></script>
         <script src="js/validacion-fechas.js"></script>
+        <script src="js/reservar.js"></script>
+
 
         <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
         <!-- * *                               SB Forms JS                               * *-->
