@@ -122,6 +122,23 @@ header("Pragma: no-cache");
                             </div>
                         </li>
                         <li class="icons dropdown">
+                            <a href="javascript:void(0)" data-toggle="dropdown">
+                                <i class="fa-solid fa-calendar-days"></i>
+                                <span class="badge badge-pill gradient-2" id="cantidad-notificaciones-finalizadas">0</span>
+                            </a>
+                            <div class="drop-down animated fadeIn dropdown-menu dropdown-notfication">
+                                <div class="dropdown-content-heading d-flex justify-content-between">
+                                    <span class="">Reservas Finalizadas</span>
+                                </div>
+                                <div class="dropdown-content-body">
+                                    <ul id="lista-notificaciones-finalizadas">
+                                        <li><span class="notification-text">Cargando...</span></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </li>
+
+                        <li class="icons dropdown">
                             <div class="user-img c-pointer position-relative" data-toggle="dropdown">
                                 <span class="activity active"></span>
                                 <i class="fas fa-user-circle fa-2x text-dark" style="font-size: 40px;"></i>
@@ -410,6 +427,7 @@ header("Pragma: no-cache");
     <script src="js_MR/reservas-tabla.js"></script>
     <script src="js_MR/dashboard-hab.js"></script>
     <script src="js_MR/notificaciones.js"></script>
+    <script src="js_MR/alertas-vencidas.js"></script>
 
     <!-- Script para evitar que el usuario vuelva a la página anterior -->
     <script>

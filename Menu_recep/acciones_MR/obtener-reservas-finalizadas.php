@@ -1,6 +1,6 @@
 <?php
 include('../../Conexión_BD/conexion.php');
-
+// este codigo muestra las reservas finalizadas y se visualizan en la pagina de historial de reservas
 $sql = "
     SELECT 
         c.prim_nom_client,
