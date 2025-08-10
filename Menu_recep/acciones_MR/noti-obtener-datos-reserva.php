@@ -2,13 +2,15 @@
 require_once("../../Conexión_BD/conexion.php");
 header("Content-Type: application/json");
 
-if (!isset($_GET['idhospedaje'])) {
-    echo json_encode(["error" => "ID de hospedaje no proporcionado"]);
+// ✅ Validar ID recibido
+if (!isset($_GET['idhospedaje']) || empty($_GET['idhospedaje'])) {
+    echo json_encode(["error" => "ID de hospedaje no proporcionado o vacío"]);
     exit;
 }
 
 $idhospedaje = intval($_GET['idhospedaje']);
 
+// ✅ Consulta SQL con alias consistentes
 $sql = "
 SELECT 
     c.prim_nom_client,
@@ -16,12 +18,12 @@ SELECT
     c.prim_apelli_client,
     c.seg_apelli_client,
     c.edad_client,
-    c.identificacion,
-    c.telefono_client,
-    c.correo_client,
-    h.fecha_lleg,
-    h.fecha_sal,
-    h.cantidad_personas,
+    c.iden_client AS identificacion,
+    c.tel_client AS telefono,
+    c.email_client AS correo,
+    h.fecha_entra AS fecha_llegada,
+    h.fecha_sal AS fecha_salida,
+    h.cant_person AS cantidad_personas,
     h.habitacion_idhabitacion,
     h.estado_hab_idestado_hab
 FROM hospedaje h
@@ -34,14 +36,25 @@ WHERE h.idhospedaje = ?
 ";
 
 $stmt = $conn->prepare($sql);
+
+if (!$stmt) {
+    echo json_encode(["error" => "Error en la preparación de la consulta: " . $conn->error]);
+    exit;
+}
+
 $stmt->bind_param("i", $idhospedaje);
-$stmt->execute();
+
+if (!$stmt->execute()) {
+    echo json_encode(["error" => "Error al ejecutar la consulta: " . $stmt->error]);
+    exit;
+}
+
 $result = $stmt->get_result();
 
 if ($row = $result->fetch_assoc()) {
     echo json_encode($row, JSON_UNESCAPED_UNICODE);
 } else {
-    echo json_encode(["error" => "Reserva no encontrada"]);
+    echo json_encode(["error" => "Reserva no encontrada", "idhospedaje" => $idhospedaje]);
 }
 
 $stmt->close();

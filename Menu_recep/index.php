@@ -421,13 +421,15 @@ header("Pragma: no-cache");
     <!-- Toastr -->
     <script src="./plugins/toastr/js/toastr.min.js"></script>
     <script src="./plugins/toastr/js/toastr.init.js"></script>
-
+<script src="../js/validacion-fechas.js"></script>
     <script src="js_MR/dashboard/dashboard-1.js"></script>
     <script src="js_MR/dashboard-metricas.js"></script>
     <script src="js_MR/reservas-tabla.js"></script>
     <script src="js_MR/dashboard-hab.js"></script>
     <script src="js_MR/notificaciones.js"></script>
     <script src="js_MR/alertas-vencidas.js"></script>
+   
+    
 
     <!-- Script para evitar que el usuario vuelva a la página anterior -->
     <script>

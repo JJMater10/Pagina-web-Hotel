@@ -122,36 +122,69 @@ $(document).ready(function () {
         });
     }
 
-    function abrirModalActualizarReserva(idhospedaje) {
-    // Abrir modal
+function abrirModalActualizarReserva(idhospedaje) {
     $('#modalEditarReserva').modal('show');
 
-    // Obtener datos y llenar campos del modal
     $.ajax({
         url: 'acciones_MR/noti-obtener-datos-reserva.php',
         method: 'GET',
         data: { idhospedaje },
         dataType: 'json',
         success: function (data) {
+            const hoy = new Date().toISOString().split('T')[0];
+
+            // Datos del huésped
             $('#edit-prim-nombre').val(data.prim_nom_client);
             $('#edit-seg-nombre').val(data.seg_nom_client);
             $('#edit-prim-apellido').val(data.prim_apelli_client);
             $('#edit-seg-apellido').val(data.seg_apelli_client);
-            $('#edit-edad').val(data.edad);
+            $('#edit-edad').val(data.edad_client);
             $('#edit-identificacion').val(data.identificacion);
             $('#edit-telefono').val(data.telefono);
             $('#edit-correo').val(data.correo);
-            $('#edit-fecha-entrada').val(data.fecha_lleg);
-            $('#edit-fecha-salida').val(data.fecha_sal);
-            $('#edit-cantidad').val(data.cant_personas);
-            $('#edit-habitacion').val(data.habitacion_idhabitacion);
-            $('#edit-estado').val(data.estado_hab_idestado_hab);
+            $('#edit-cantidad').val(data.cantidad_personas);
+
+            // Fechas
+            $('#edit-fecha-entrada').val(data.fecha_llegada);
+
+            // ✅ Establecer fecha mínima y valor de salida
+            const fechaSalidaInput = $('#edit-fecha-salida');
+            fechaSalidaInput.attr('min', hoy);
+
+            if (data.fecha_salida >= hoy) {
+                fechaSalidaInput.val(data.fecha_salida);
+            } else {
+                fechaSalidaInput.val(hoy); // Forzar fecha de hoy si la guardada es anterior
+            }
+
+            // 🔄 Cargar habitaciones
+            $.getJSON('acciones_MR/listar-habitaciones.php', { idactual: data.habitacion_idhabitacion }, function (habitaciones) {
+                let habSelect = $('#edit-habitacion');
+                habSelect.empty();
+                habitaciones.forEach(h => {
+                    habSelect.append(`<option value="${h.idhabitacion}">${h.nom_hab} (${h.hab_dispo} disponibles)</option>`);
+                });
+                habSelect.val(data.habitacion_idhabitacion);
+            });
+
+            // 🔄 Cargar estados
+            $.getJSON('acciones_MR/listar-estados.php', function (estados) {
+                let estadoSelect = $('#edit-estado');
+                estadoSelect.empty();
+                estados.forEach(e => {
+                    estadoSelect.append(`<option value="${e.idestado_hab}">${e.tipo_estado}</option>`);
+                });
+                estadoSelect.val(data.estado_hab_idestado_hab);
+            });
         },
         error: function () {
             Swal.fire('Error', 'No se pudieron cargar los datos.', 'error');
         }
     });
 }
+
+
+
 
     // Iniciar carga de notificaciones
     cargarNotificaciones();
@@ -197,4 +230,40 @@ $(document).on('click', '.noti-finalizada', function () {
 });
 
 
+});
+
+$('#guardarCambios').on('click', function () {
+    const datos = {
+        identificacion: $('#edit-identificacion').val(),
+        prim_nom: $('#edit-prim-nombre').val(),
+        seg_nom: $('#edit-seg-nombre').val(),
+        prim_ape: $('#edit-prim-apellido').val(),
+        seg_ape: $('#edit-seg-apellido').val(),
+        edad: $('#edit-edad').val(),
+        telefono: $('#edit-telefono').val(),
+        correo: $('#edit-correo').val(),
+        fecha_entra: $('#edit-fecha-entrada').val(),
+        fecha_sal: $('#edit-fecha-salida').val(),
+        cantidad: $('#edit-cantidad').val(),
+        habitacion: $('#edit-habitacion').val(),
+        estado: $('#edit-estado').val()
+    };
+
+    $.ajax({
+        url: 'acciones_MR/guardar-edicion.php',  // ✅ Reutilizamos el archivo existente
+        method: 'POST',
+        data: datos,
+        success: function (resp) {
+            if (resp.trim() === 'ok') {
+                Swal.fire('¡Actualizado!', 'La reserva se actualizó correctamente.', 'success');
+                $('#modalEditarReserva').modal('hide');
+                cargarNotificacionesFinalizadas(); // 🔄 Refresca notificaciones
+            } else {
+                Swal.fire('Error', resp, 'error');
+            }
+        },
+        error: function () {
+            Swal.fire('Error', 'No se pudo actualizar la reserva.', 'error');
+        }
+    });
 });
